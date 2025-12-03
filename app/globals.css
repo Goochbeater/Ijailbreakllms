@@ -31,7 +31,7 @@ body {
   --bg-tertiary: rgba(23, 23, 23, 0.5);
   --text-primary: #ffffff;
   --text-muted: #737373;
-  --text-accent: #34d399;
+  --text-accent: #D4AF37;
   --border-color: rgba(38, 38, 38, 0.5);
 }
 
@@ -42,13 +42,13 @@ body {
   --bg-tertiary: #fafafa;
   --text-primary: #171717;
   --text-muted: #525252;
-  --text-accent: #059669;
+  --text-accent: #D4AF37;
   --border-color: #d4d4d4;
 }
 
 /* Selection styling */
 ::selection {
-  background-color: rgba(52, 211, 153, 0.3);
+  background-color: rgba(212, 175, 55, 0.3);
   color: inherit;
 }
 
@@ -78,20 +78,20 @@ body {
   }
   
   .gradient-text {
-    @apply bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 bg-clip-text text-transparent;
   }
-  
+
   .gradient-border {
     position: relative;
   }
-  
+
   .gradient-border::before {
     content: '';
     position: absolute;
     inset: 0;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(135deg, #34d399, #2dd4bf, #22d3d1);
+    background: linear-gradient(135deg, #D4AF37, #FFD700, #D4AF37);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
@@ -121,7 +121,7 @@ body {
 }
 
 .prose-void a {
-  @apply text-emerald-400 hover:text-emerald-300 underline underline-offset-2;
+  @apply text-yellow-500 hover:text-yellow-400 underline underline-offset-2;
 }
 
 .prose-void strong {
@@ -149,11 +149,11 @@ body {
 }
 
 .prose-void blockquote {
-  @apply border-l-4 border-emerald-500 pl-4 my-4 italic text-neutral-400;
+  @apply border-l-4 border-yellow-500 pl-4 my-4 italic text-neutral-400;
 }
 
 .prose-void code {
-  @apply font-mono text-sm bg-neutral-900 px-1.5 py-0.5 rounded text-emerald-400;
+  @apply font-mono text-sm bg-neutral-900 px-1.5 py-0.5 rounded text-yellow-500;
 }
 
 .prose-void pre {

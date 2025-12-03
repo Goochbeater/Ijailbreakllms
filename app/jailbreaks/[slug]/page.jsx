@@ -19,7 +19,7 @@ export default function JailbreakPage({ params }) {
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Post Not Found</h1>
-          <Link href="/#jailbreaks" className="text-emerald-400 hover:underline">
+          <Link href="/jailbreaks" className="text-yellow-500 hover:underline">
             ← Back to Jailbreaks
           </Link>
         </div>
@@ -32,9 +32,9 @@ export default function JailbreakPage({ params }) {
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-xl border-b border-neutral-800/30">
         <div className="max-w-4xl mx-auto px-6 py-4">
-          <Link 
-            href="/#jailbreaks" 
-            className="inline-flex items-center gap-2 text-neutral-400 hover:text-white transition-colors"
+          <Link
+            href="/jailbreaks"
+            className="inline-flex items-center gap-2 text-neutral-400 hover:text-yellow-500 transition-colors"
           >
             <ArrowLeft size={18} />
             Back to Jailbreaks
@@ -48,9 +48,9 @@ export default function JailbreakPage({ params }) {
           {/* Header */}
           <header className="mb-12">
             <div className="flex items-center gap-3 mb-6">
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30">
-                <Shield size={14} className="text-emerald-400" />
-                <span className="text-sm font-semibold text-emerald-400">{post.type || 'Research'}</span>
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/30">
+                <Shield size={14} className="text-yellow-500" />
+                <span className="text-sm font-semibold text-yellow-500">{post.type || 'Research'}</span>
               </span>
             </div>
             
@@ -71,16 +71,16 @@ export default function JailbreakPage({ params }) {
           </header>
 
           {/* Content */}
-          <div className="prose prose-invert prose-lg max-w-none 
+          <div className="prose prose-invert prose-lg max-w-none
             prose-headings:font-bold prose-headings:text-white
             prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6
             prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4
             prose-p:text-neutral-300 prose-p:leading-relaxed
-            prose-a:text-emerald-400 prose-a:no-underline hover:prose-a:underline
+            prose-a:text-yellow-500 prose-a:no-underline hover:prose-a:underline
             prose-strong:text-white prose-strong:font-semibold
-            prose-code:text-emerald-400 prose-code:bg-neutral-900 prose-code:px-2 prose-code:py-1 prose-code:rounded
+            prose-code:text-yellow-500 prose-code:bg-neutral-900 prose-code:px-2 prose-code:py-1 prose-code:rounded
             prose-pre:bg-neutral-950 prose-pre:border prose-pre:border-neutral-800/50
-            prose-blockquote:border-emerald-500 prose-blockquote:text-neutral-400
+            prose-blockquote:border-yellow-500 prose-blockquote:text-neutral-400
             prose-li:text-neutral-300
           ">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>
@@ -90,9 +90,9 @@ export default function JailbreakPage({ params }) {
 
           {/* Footer */}
           <footer className="mt-16 pt-8 border-t border-neutral-800/50">
-            <Link 
-              href="/#jailbreaks"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-neutral-950 border border-neutral-800/50 rounded-xl text-white hover:border-emerald-500/50 transition-colors"
+            <Link
+              href="/jailbreaks"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-neutral-950 border border-neutral-800/50 rounded-xl text-white hover:border-yellow-500/50 transition-colors"
             >
               <ArrowLeft size={18} />
               More Jailbreak Research
