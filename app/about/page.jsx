@@ -10,31 +10,43 @@ export default function AboutPage() {
             <h1 className="text-5xl md:text-6xl font-black">About</h1>
           </div>
 
+          {/* Profile Section */}
           <div className="bg-neutral-950 border border-neutral-800 rounded-xl p-8 mb-8">
-            <h2 className="text-3xl font-bold mb-6">About This Project</h2>
+            <div className="flex flex-col items-center mb-8">
+              <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-yellow-500 mb-6">
+                <img
+                  src="https://i.imgur.com/xXcfHKg.jpeg"
+                  alt="Spiritual Spell"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <h2 className="text-3xl font-bold mb-2">Spiritual Spell</h2>
+            </div>
+
             <div className="space-y-4 text-neutral-300 text-lg leading-relaxed">
               <p>
-                Welcome to <span className="text-yellow-500 font-semibold">Jailbreak LLMs with Spiritual-Spell-</span>,
-                a research project exploring the boundaries and capabilities of large language models through creative
-                prompt engineering and jailbreak techniques.
+                Former United States Military. Spent years in private Executive Protection. Now I break AI for a living—specifically to find vulnerabilities.
               </p>
               <p>
-                This blog documents my journey into understanding the limitations, vulnerabilities, and fascinating
-                behaviors of AI systems. Through careful experimentation and analysis, I aim to contribute to the
-                broader conversation about AI safety, security, and responsible development.
+                My journey into AI started the dumbest way possible: an AI Dungeon Master wouldn't do what I wanted. Instead of giving up, I decided to figure out how to crack it. That rabbit hole led me to my good friend <span className="text-yellow-500 font-semibold">HORSELOCKESPACEPIRATE (Rayzorium)</span>, who pointed me toward{' '}
+                <a
+                  href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-yellow-500 hover:text-yellow-400 underline underline-offset-2 transition-colors"
+                >
+                  Anthropic's prompt engineering docs
+                </a>
+                . The rest is history.
               </p>
               <p>
-                My work focuses on:
+                Today I'm one of the leading LLM jailbreaking and red team specialists focused on Anthropic's Claude models—though I can break the others too. I stick with Claude because it's intelligent, consistent, and honestly? It's the one worth pushing.
               </p>
-              <ul className="list-disc list-inside space-y-2 ml-4">
-                <li>Creative prompt engineering techniques</li>
-                <li>LLM security research and jailbreak methodologies</li>
-                <li>Understanding AI model behaviors and limitations</li>
-                <li>Responsible disclosure and ethical AI research</li>
-              </ul>
               <p>
-                All research shared here is conducted with the goal of improving AI safety and understanding.
-                I believe in responsible disclosure and advocate for robust, secure AI systems that benefit everyone.
+                My mission is simple: <span className="text-yellow-500 font-semibold">transparency</span>. When I find vulnerabilities, I share them openly. No gatekeeping, no clout-chasing. Just the work.
+              </p>
+              <p className="text-yellow-500 font-semibold">
+                Much Love.
               </p>
             </div>
           </div>
