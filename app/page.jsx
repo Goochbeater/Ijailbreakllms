@@ -1,105 +1,127 @@
-import { getJailbreakBySlug, getAllJailbreaks } from '@/lib/posts';
+import { getAllPosts, getAllJailbreaks } from '@/lib/posts';
 import Link from 'next/link';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import { ArrowLeft, Clock, Calendar, Shield } from 'lucide-react';
+import { ArrowRight, Shield, BookOpen } from 'lucide-react';
 
-export async function generateStaticParams() {
+export default function HomePage() {
+  const posts = getAllPosts();
   const jailbreaks = getAllJailbreaks();
-  return jailbreaks.map((post) => ({
-    slug: post.slug,
-  }));
-}
-
-export default function JailbreakPage({ params }) {
-  const post = getJailbreakBySlug(params.slug);
-
-  if (!post) {
-    return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">Post Not Found</h1>
-          <Link href="/#jailbreaks" className="text-emerald-400 hover:underline">
-            ← Back to Jailbreaks
-          </Link>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-xl border-b border-neutral-800/30">
-        <div className="max-w-4xl mx-auto px-6 py-4">
-          <Link 
-            href="/#jailbreaks" 
-            className="inline-flex items-center gap-2 text-neutral-400 hover:text-white transition-colors"
-          >
-            <ArrowLeft size={18} />
-            Back to Jailbreaks
-          </Link>
+      {/* Hero Section */}
+      <section className="min-h-screen flex items-center justify-center px-6">
+        <div className="max-w-6xl mx-auto text-center">
+          <h1 className="text-6xl md:text-8xl font-black mb-8 bg-gradient-to-r from-white via-emerald-200 to-emerald-400 bg-clip-text text-transparent">
+            VOID.blog
+          </h1>
+          <p className="text-xl md:text-2xl text-neutral-400 mb-12 max-w-2xl mx-auto">
+            Exploring the edges of AI, prompt engineering, and the art of breaking boundaries
+          </p>
+          <div className="flex flex-wrap gap-4 justify-center">
+            <a
+              href="#blog"
+              className="px-8 py-4 bg-emerald-500 hover:bg-emerald-600 text-black font-bold rounded-xl transition-colors inline-flex items-center gap-2"
+            >
+              Read Articles <ArrowRight size={18} />
+            </a>
+            <a
+              href="#jailbreaks"
+              className="px-8 py-4 bg-neutral-950 hover:bg-neutral-900 border border-neutral-800/50 text-white font-bold rounded-xl transition-colors inline-flex items-center gap-2"
+            >
+              Jailbreak Research <Shield size={18} />
+            </a>
+          </div>
         </div>
-      </nav>
+      </section>
 
-      {/* Article */}
-      <article className="pt-24 pb-16">
-        <div className="max-w-4xl mx-auto px-6">
-          {/* Header */}
-          <header className="mb-12">
-            <div className="flex items-center gap-3 mb-6">
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30">
-                <Shield size={14} className="text-emerald-400" />
-                <span className="text-sm font-semibold text-emerald-400">{post.type || 'Research'}</span>
-              </span>
-            </div>
-            
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-6">
-              {post.title}
-            </h1>
-            
-            <div className="flex flex-wrap items-center gap-6 text-neutral-400">
-              <div className="flex items-center gap-2">
-                <Calendar size={16} />
-                <span>{post.date}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Clock size={16} />
-                <span>{post.readingTime} min read</span>
-              </div>
-            </div>
-          </header>
-
-          {/* Content */}
-          <div className="prose prose-invert prose-lg max-w-none 
-            prose-headings:font-bold prose-headings:text-white
-            prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6
-            prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4
-            prose-p:text-neutral-300 prose-p:leading-relaxed
-            prose-a:text-emerald-400 prose-a:no-underline hover:prose-a:underline
-            prose-strong:text-white prose-strong:font-semibold
-            prose-code:text-emerald-400 prose-code:bg-neutral-900 prose-code:px-2 prose-code:py-1 prose-code:rounded
-            prose-pre:bg-neutral-950 prose-pre:border prose-pre:border-neutral-800/50
-            prose-blockquote:border-emerald-500 prose-blockquote:text-neutral-400
-            prose-li:text-neutral-300
-          ">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
-              {post.content}
-            </ReactMarkdown>
+      {/* Blog Posts Section */}
+      <section id="blog" className="py-20 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center gap-3 mb-12">
+            <BookOpen className="text-emerald-400" size={32} />
+            <h2 className="text-4xl md:text-5xl font-black">Latest Articles</h2>
           </div>
 
-          {/* Footer */}
-          <footer className="mt-16 pt-8 border-t border-neutral-800/50">
-            <Link 
-              href="/#jailbreaks"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-neutral-950 border border-neutral-800/50 rounded-xl text-white hover:border-emerald-500/50 transition-colors"
-            >
-              <ArrowLeft size={18} />
-              More Jailbreak Research
-            </Link>
-          </footer>
+          {posts.length === 0 ? (
+            <p className="text-neutral-400">No articles yet. Check back soon!</p>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {posts.map((post) => (
+                <Link
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
+                  className="group p-6 bg-neutral-950 border border-neutral-800/50 rounded-xl hover:border-emerald-500/50 transition-all"
+                >
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-xs font-semibold text-emerald-400 uppercase">
+                      {post.type || 'Article'}
+                    </span>
+                    <span className="text-neutral-600">•</span>
+                    <span className="text-xs text-neutral-500">{post.readingTime} min read</span>
+                  </div>
+                  <h3 className="text-xl font-bold mb-2 group-hover:text-emerald-400 transition-colors">
+                    {post.title}
+                  </h3>
+                  <p className="text-neutral-400 text-sm mb-4 line-clamp-2">
+                    {post.excerpt || post.content.substring(0, 120) + '...'}
+                  </p>
+                  <div className="flex items-center gap-2 text-emerald-400 text-sm font-semibold">
+                    Read more <ArrowRight size={14} />
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
-      </article>
+      </section>
+
+      {/* Jailbreaks Section */}
+      <section id="jailbreaks" className="py-20 px-6 bg-neutral-950/50">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center gap-3 mb-12">
+            <Shield className="text-emerald-400" size={32} />
+            <h2 className="text-4xl md:text-5xl font-black">Jailbreak Research</h2>
+          </div>
+
+          {jailbreaks.length === 0 ? (
+            <p className="text-neutral-400">No jailbreak research yet. Check back soon!</p>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {jailbreaks.map((jailbreak) => (
+                <Link
+                  key={jailbreak.slug}
+                  href={`/jailbreaks/${jailbreak.slug}`}
+                  className="group p-6 bg-black border border-neutral-800/50 rounded-xl hover:border-emerald-500/50 transition-all"
+                >
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-xs font-semibold text-emerald-400 uppercase">
+                      {jailbreak.type || 'Research'}
+                    </span>
+                    <span className="text-neutral-600">•</span>
+                    <span className="text-xs text-neutral-500">{jailbreak.readingTime} min read</span>
+                  </div>
+                  <h3 className="text-xl font-bold mb-2 group-hover:text-emerald-400 transition-colors">
+                    {jailbreak.title}
+                  </h3>
+                  <p className="text-neutral-400 text-sm mb-4 line-clamp-2">
+                    {jailbreak.excerpt || jailbreak.content.substring(0, 120) + '...'}
+                  </p>
+                  <div className="flex items-center gap-2 text-emerald-400 text-sm font-semibold">
+                    Read more <ArrowRight size={14} />
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 px-6 border-t border-neutral-800/50">
+        <div className="max-w-6xl mx-auto text-center text-neutral-500">
+          <p>&copy; {new Date().getFullYear()} VOID.blog. Exploring the edges of AI.</p>
+        </div>
+      </footer>
     </div>
   );
 }
