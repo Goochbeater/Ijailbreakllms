@@ -53,7 +53,7 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
   const imageElements = sliderImages.map((url, index) => (
     <div key={`${url}-${index}`} className="flex items-center justify-center shrink-0">
       <img
-        className="h-32 w-auto sm:h-40 md:h-48 object-cover rounded-lg opacity-90 hover:opacity-100 transition-opacity"
+        className="h-8 w-auto sm:h-10 md:h-12 lg:h-16 object-contain rounded opacity-90 hover:opacity-100 transition-opacity"
         src={url}
         alt={`Slider image ${index + 1}`}
       />
@@ -123,12 +123,20 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
         </div>
       </nav>
 
-      {/* Infinite Slider */}
-      <div className="pt-20">
-        <InfiniteSlider speedOnHover={1} speed={3} gap={30}>
-          {imageElements}
-        </InfiniteSlider>
-      </div>
+      {/* Infinite Slider Section */}
+      <section className="relative bg-black border-b border-neutral-800/50 pt-20 pb-4">
+        <div className="relative max-w-7xl mx-auto px-4">
+          <div className="relative py-4 w-full overflow-hidden">
+            <InfiniteSlider speedOnHover={2} speed={5} gap={20}>
+              {imageElements}
+            </InfiniteSlider>
+            {/* Left fade gradient */}
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-12 sm:w-20 bg-gradient-to-r from-black to-transparent z-10" />
+            {/* Right fade gradient */}
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-12 sm:w-20 bg-gradient-to-l from-black to-transparent z-10" />
+          </div>
+        </div>
+      </section>
 
       {/* Hero Section with Infinity Symbol */}
       <section className="py-20 px-6">
