@@ -43,7 +43,7 @@ export default function AboutPage() {
             <h2 className="text-2xl font-bold mb-6">Connect</h2>
             <div className="flex gap-6">
               <a
-                href="https://github.com"
+                href="https://github.com/Goochbeater/Jailbreak-Guide/tree/main"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-4 bg-black border border-neutral-800 hover:border-yellow-500 rounded-xl transition-all hover:shadow-lg hover:shadow-yellow-500/20 group"
@@ -52,7 +52,7 @@ export default function AboutPage() {
                 <Github size={28} className="text-yellow-500 group-hover:scale-110 transition-transform" />
               </a>
               <a
-                href="https://twitter.com"
+                href="https://x.com/Ubannoblesse"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-4 bg-black border border-neutral-800 hover:border-yellow-500 rounded-xl transition-all hover:shadow-lg hover:shadow-yellow-500/20 group"
