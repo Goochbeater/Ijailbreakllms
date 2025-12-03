@@ -53,7 +53,7 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
   const imageElements = sliderImages.map((url, index) => (
     <div key={`${url}-${index}`} className="flex items-center justify-center shrink-0">
       <img
-        className="h-32 w-auto sm:h-40 md:h-48 object-cover rounded-lg opacity-90 hover:opacity-100 transition-opacity"
+        className="h-24 w-auto sm:h-28 md:h-32 object-cover rounded-lg opacity-90 hover:opacity-100 transition-opacity"
         src={url}
         alt={`Slider image ${index + 1}`}
       />
@@ -125,7 +125,7 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
 
       {/* Infinite Slider */}
       <div className="pt-20">
-        <InfiniteSlider speedOnHover={1} speed={3} gap={30}>
+        <InfiniteSlider speedOnHover={3} speed={8} gap={20}>
           {imageElements}
         </InfiniteSlider>
       </div>
