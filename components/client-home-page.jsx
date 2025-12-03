@@ -125,7 +125,7 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
 
       {/* Infinite Slider */}
       <div className="pt-20">
-        <InfiniteSlider speedOnHover={3} speed={8} gap={20}>
+        <InfiniteSlider speedOnHover={2} speed={6} gap={20}>
           {imageElements}
         </InfiniteSlider>
       </div>
