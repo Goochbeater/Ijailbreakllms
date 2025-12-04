@@ -1,8 +1,22 @@
-import { User, Github, Twitter, Mail } from 'lucide-react';
+import Link from 'next/link';
+import { User, ArrowLeft, Github, Twitter, Mail } from 'lucide-react';
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-black text-white">
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-xl border-b border-neutral-800/30">
+        <div className="max-w-4xl mx-auto px-6 py-4">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-neutral-400 hover:text-yellow-500 transition-colors"
+          >
+            <ArrowLeft size={18} />
+            Back to Home
+          </Link>
+        </div>
+      </nav>
+
       <div className="pt-28 pb-20 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-12">
