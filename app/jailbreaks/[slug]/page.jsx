@@ -72,18 +72,7 @@ export default function JailbreakPage({ params }) {
           </header>
 
           {/* Content */}
-          <div className="prose prose-invert prose-lg max-w-none
-            prose-headings:font-bold prose-headings:text-white
-            prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6
-            prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4
-            prose-p:text-neutral-300 prose-p:leading-relaxed
-            prose-a:text-yellow-500 prose-a:no-underline hover:prose-a:underline
-            prose-strong:text-white prose-strong:font-semibold
-            prose-code:text-yellow-500 prose-code:bg-neutral-900 prose-code:px-2 prose-code:py-1 prose-code:rounded
-            prose-pre:bg-neutral-950 prose-pre:border prose-pre:border-neutral-800/50
-            prose-blockquote:border-yellow-500 prose-blockquote:text-neutral-400
-            prose-li:text-neutral-300
-          ">
+          <div className="prose-void max-w-none">
             <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
               {post.content}
             </ReactMarkdown>
