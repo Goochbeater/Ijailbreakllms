@@ -1,30 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { Menu, X, Sun, Moon, Mail, ArrowRight, Infinity } from 'lucide-react';
 import { InfiniteSlider } from '@/components/infinite-slider';
+import { useTheme } from '@/app/layout';
 
 export function ClientHomePage({ initialPosts, initialJailbreaks }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isDark, setIsDark] = useState(true);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      setIsDark(savedTheme === 'dark');
-    }
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', isDark);
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  }, [isDark]);
-
-  const toggleTheme = () => {
-    setIsDark(!isDark);
-  };
+  const { isDark, toggle } = useTheme();
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -81,7 +66,7 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
               <Link href="/about" className={`${isDark ? 'text-neutral-400 hover:text-yellow-500' : 'text-neutral-600 hover:text-yellow-600'} transition-colors font-medium`}>About</Link>
               <Link href="/contact" className={`${isDark ? 'text-neutral-400 hover:text-yellow-500' : 'text-neutral-600 hover:text-yellow-600'} transition-colors font-medium`}>Contact</Link>
               <button
-                onClick={toggleTheme}
+                onClick={toggle}
                 className={`p-2 rounded-lg ${isDark ? 'bg-neutral-950 hover:bg-neutral-900' : 'bg-neutral-100 hover:bg-neutral-200'} transition-colors`}
                 aria-label="Toggle theme"
               >
@@ -92,7 +77,7 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
             {/* Mobile Menu Button */}
             <div className="flex md:hidden items-center gap-4">
               <button
-                onClick={toggleTheme}
+                onClick={toggle}
                 className={`p-2 rounded-lg ${isDark ? 'bg-neutral-950' : 'bg-neutral-100'}`}
                 aria-label="Toggle theme"
               >
