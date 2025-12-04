@@ -41,7 +41,7 @@ export default function AboutPage() {
                   href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-yellow-500 hover:text-yellow-400 underline underline-offset-2 transition-colors"
+                  className="text-blue-500 hover:text-blue-400 underline underline-offset-2 transition-colors"
                 >
                   Anthropic's prompt engineering docs
                 </a>

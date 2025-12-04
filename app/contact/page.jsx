@@ -94,7 +94,7 @@ export default function ContactPage() {
           <div className="mt-8 text-center">
             <p className={isDark ? 'text-neutral-500' : 'text-neutral-600'}>
               Or email Spiritual Spell (Vichaps) directly at{' '}
-              <a href="mailto:spiritualspell76@gmail.com" className="text-yellow-500 hover:text-yellow-400 transition-colors">
+              <a href="mailto:spiritualspell76@gmail.com" className="text-blue-500 hover:text-blue-400 underline underline-offset-2 transition-colors">
                 spiritualspell76@gmail.com
               </a>
             </p>
