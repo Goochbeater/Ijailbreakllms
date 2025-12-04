@@ -38,8 +38,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
       <head>
-        <title>VOID.blog</title>
-        <meta name="description" content="Exploring the edges of AI" />
+        <title>IjailbreakLLMs - AI Jailbreaking Research</title>
+        <meta name="description" content="LLM jailbreaking research, prompt engineering vulnerabilities, and red team testing by Spiritual Spell (Vichaps)" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
