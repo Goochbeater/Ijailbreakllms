@@ -2,6 +2,7 @@ import { getJailbreakBySlug, getAllJailbreaks } from '@/lib/posts';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 import { ArrowLeft, Clock, Calendar, Shield } from 'lucide-react';
 
 export async function generateStaticParams() {
@@ -83,7 +84,7 @@ export default function JailbreakPage({ params }) {
             prose-blockquote:border-yellow-500 prose-blockquote:text-neutral-400
             prose-li:text-neutral-300
           ">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
               {post.content}
             </ReactMarkdown>
           </div>
