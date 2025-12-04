@@ -145,7 +145,7 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
             <Infinity size={80} className="text-yellow-500 animate-bounce" strokeWidth={1.5} />
           </div>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 bg-gradient-to-r from-white via-yellow-200 to-yellow-500 bg-clip-text text-transparent leading-tight">
-            Jailbreak LLMs with Spiritual-Spell-
+            Jailbreak LLMs with Spiritual Spell (Vichaps)
           </h1>
           <p className={`text-lg md:text-xl ${isDark ? 'text-neutral-400' : 'text-neutral-600'} max-w-2xl mx-auto`}>
             Exploring the boundaries of AI through creative prompt engineering
@@ -281,7 +281,7 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
       <footer className={`py-12 px-6 border-t ${isDark ? 'border-neutral-800/50' : 'border-neutral-200'}`}>
         <div className="max-w-7xl mx-auto text-center">
           <p className={isDark ? 'text-neutral-500' : 'text-neutral-600'}>
-            &copy; {new Date().getFullYear()} Jailbreak LLMs with Spiritual-Spell-. All rights reserved.
+            &copy; {new Date().getFullYear()} Spiritual Spell (Vichaps). All rights reserved.
           </p>
         </div>
       </footer>

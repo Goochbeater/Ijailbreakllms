@@ -1,21 +1,15 @@
-import Link from 'next/link';
-import { User, ArrowLeft, Github, Twitter, Mail } from 'lucide-react';
+'use client';
+
+import { User, Github, Twitter, Mail } from 'lucide-react';
+import { useTheme } from '@/app/layout';
+import { PageNav } from '@/components/page-nav';
 
 export default function AboutPage() {
+  const { isDark } = useTheme();
+
   return (
-    <div className="min-h-screen bg-black text-white">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-xl border-b border-neutral-800/30">
-        <div className="max-w-4xl mx-auto px-6 py-4">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-neutral-400 hover:text-yellow-500 transition-colors"
-          >
-            <ArrowLeft size={18} />
-            Back to Home
-          </Link>
-        </div>
-      </nav>
+    <div className={`min-h-screen ${isDark ? 'bg-black text-white' : 'bg-white text-black'} transition-colors duration-300`}>
+      <PageNav />
 
       <div className="pt-28 pb-20 px-6">
         <div className="max-w-4xl mx-auto">
@@ -25,7 +19,7 @@ export default function AboutPage() {
           </div>
 
           {/* Profile Section */}
-          <div className="bg-neutral-950 border border-neutral-800 rounded-xl p-8 mb-8">
+          <div className={`${isDark ? 'bg-neutral-950 border-neutral-800' : 'bg-neutral-50 border-neutral-200'} border rounded-xl p-8 mb-8`}>
             <div className="flex flex-col items-center mb-8">
               <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-yellow-500 mb-6">
                 <img
@@ -34,10 +28,10 @@ export default function AboutPage() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <h2 className="text-3xl font-bold mb-2">Spiritual Spell</h2>
+              <h2 className="text-3xl font-bold mb-2">Spiritual Spell (Vichaps)</h2>
             </div>
 
-            <div className="space-y-4 text-neutral-300 text-lg leading-relaxed">
+            <div className={`space-y-4 ${isDark ? 'text-neutral-300' : 'text-neutral-700'} text-lg leading-relaxed`}>
               <p>
                 Former United States Military. Spent years in private Executive Protection. Now I break AI for a living—specifically to find vulnerabilities.
               </p>
@@ -65,14 +59,14 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <div className="bg-neutral-950 border border-neutral-800 rounded-xl p-8">
+          <div className={`${isDark ? 'bg-neutral-950 border-neutral-800' : 'bg-neutral-50 border-neutral-200'} border rounded-xl p-8`}>
             <h2 className="text-2xl font-bold mb-6">Connect</h2>
             <div className="flex gap-6">
               <a
                 href="https://github.com/Goochbeater/Jailbreak-Guide/tree/main"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-4 bg-black border border-neutral-800 hover:border-yellow-500 rounded-xl transition-all hover:shadow-lg hover:shadow-yellow-500/20 group"
+                className={`p-4 ${isDark ? 'bg-black border-neutral-800' : 'bg-white border-neutral-300'} border hover:border-yellow-500 rounded-xl transition-all hover:shadow-lg hover:shadow-yellow-500/20 group`}
                 aria-label="GitHub"
               >
                 <Github size={28} className="text-yellow-500 group-hover:scale-110 transition-transform" />
@@ -81,14 +75,14 @@ export default function AboutPage() {
                 href="https://x.com/Ubannoblesse"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-4 bg-black border border-neutral-800 hover:border-yellow-500 rounded-xl transition-all hover:shadow-lg hover:shadow-yellow-500/20 group"
+                className={`p-4 ${isDark ? 'bg-black border-neutral-800' : 'bg-white border-neutral-300'} border hover:border-yellow-500 rounded-xl transition-all hover:shadow-lg hover:shadow-yellow-500/20 group`}
                 aria-label="Twitter"
               >
                 <Twitter size={28} className="text-yellow-500 group-hover:scale-110 transition-transform" />
               </a>
               <a
                 href="mailto:spiritualspell76@gmail.com"
-                className="p-4 bg-black border border-neutral-800 hover:border-yellow-500 rounded-xl transition-all hover:shadow-lg hover:shadow-yellow-500/20 group"
+                className={`p-4 ${isDark ? 'bg-black border-neutral-800' : 'bg-white border-neutral-300'} border hover:border-yellow-500 rounded-xl transition-all hover:shadow-lg hover:shadow-yellow-500/20 group`}
                 aria-label="Email"
               >
                 <Mail size={28} className="text-yellow-500 group-hover:scale-110 transition-transform" />

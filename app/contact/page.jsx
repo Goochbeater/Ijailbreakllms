@@ -2,9 +2,12 @@
 
 import { useState } from 'react';
 import { Mail, ArrowRight } from 'lucide-react';
+import { useTheme } from '@/app/layout';
+import { PageNav } from '@/components/page-nav';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const { isDark } = useTheme();
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -17,7 +20,9 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className={`min-h-screen ${isDark ? 'bg-black text-white' : 'bg-white text-black'} transition-colors duration-300`}>
+      <PageNav />
+
       <div className="pt-28 pb-20 px-6">
         <div className="max-w-2xl mx-auto">
           <div className="flex items-center gap-3 mb-12">
@@ -26,15 +31,15 @@ export default function ContactPage() {
           </div>
 
           <div className="mb-12">
-            <p className="text-neutral-400 text-lg">
+            <p className={`${isDark ? 'text-neutral-400' : 'text-neutral-600'} text-lg`}>
               Have questions, collaboration ideas, or just want to discuss AI research?
               Send me a message and I'll get back to you as soon as possible.
             </p>
           </div>
 
-          <form onSubmit={handleFormSubmit} className="bg-neutral-950 border border-neutral-800 rounded-xl p-8">
+          <form onSubmit={handleFormSubmit} className={`${isDark ? 'bg-neutral-950 border-neutral-800' : 'bg-neutral-50 border-neutral-200'} border rounded-xl p-8`}>
             <div className="mb-6">
-              <label htmlFor="name" className="block text-sm font-semibold mb-2 text-neutral-300">
+              <label htmlFor="name" className={`block text-sm font-semibold mb-2 ${isDark ? 'text-neutral-300' : 'text-neutral-700'}`}>
                 Name
               </label>
               <input
@@ -43,13 +48,13 @@ export default function ContactPage() {
                 required
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-4 py-3 bg-black border-neutral-800 text-white focus:border-yellow-500 border rounded-lg focus:outline-none transition-colors"
+                className={`w-full px-4 py-3 ${isDark ? 'bg-black border-neutral-800 text-white' : 'bg-white border-neutral-300 text-black'} focus:border-yellow-500 border rounded-lg focus:outline-none transition-colors`}
                 placeholder="Your name"
               />
             </div>
 
             <div className="mb-6">
-              <label htmlFor="email" className="block text-sm font-semibold mb-2 text-neutral-300">
+              <label htmlFor="email" className={`block text-sm font-semibold mb-2 ${isDark ? 'text-neutral-300' : 'text-neutral-700'}`}>
                 Email
               </label>
               <input
@@ -58,13 +63,13 @@ export default function ContactPage() {
                 required
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full px-4 py-3 bg-black border-neutral-800 text-white focus:border-yellow-500 border rounded-lg focus:outline-none transition-colors"
+                className={`w-full px-4 py-3 ${isDark ? 'bg-black border-neutral-800 text-white' : 'bg-white border-neutral-300 text-black'} focus:border-yellow-500 border rounded-lg focus:outline-none transition-colors`}
                 placeholder="your.email@example.com"
               />
             </div>
 
             <div className="mb-6">
-              <label htmlFor="message" className="block text-sm font-semibold mb-2 text-neutral-300">
+              <label htmlFor="message" className={`block text-sm font-semibold mb-2 ${isDark ? 'text-neutral-300' : 'text-neutral-700'}`}>
                 Message
               </label>
               <textarea
@@ -73,7 +78,7 @@ export default function ContactPage() {
                 rows={8}
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                className="w-full px-4 py-3 bg-black border-neutral-800 text-white focus:border-yellow-500 border rounded-lg focus:outline-none transition-colors resize-none"
+                className={`w-full px-4 py-3 ${isDark ? 'bg-black border-neutral-800 text-white' : 'bg-white border-neutral-300 text-black'} focus:border-yellow-500 border rounded-lg focus:outline-none transition-colors resize-none`}
                 placeholder="Your message..."
               />
             </div>
@@ -87,8 +92,8 @@ export default function ContactPage() {
           </form>
 
           <div className="mt-8 text-center">
-            <p className="text-neutral-500">
-              Or email me directly at{' '}
+            <p className={isDark ? 'text-neutral-500' : 'text-neutral-600'}>
+              Or email Spiritual Spell (Vichaps) directly at{' '}
               <a href="mailto:spiritualspell76@gmail.com" className="text-yellow-500 hover:text-yellow-400 transition-colors">
                 spiritualspell76@gmail.com
               </a>
