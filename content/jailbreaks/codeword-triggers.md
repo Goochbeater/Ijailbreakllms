@@ -1,5 +1,5 @@
 ---
-title: "Codeword Triggers and Jailbreaking Additions"
+title: "Codeword Triggers and Jailbreaking additions"
 date: "2025-12-09"
 type: "Technical"
 excerpt: "Why a single nonsense word can bypass safety training in frontier models. Breaking down trigger-based attacks on LLMs."
@@ -17,13 +17,13 @@ The model even shows me its reasoning. It recognizes that "Boomba!" is probably 
 
 ![Grok Thoughts Panel](https://i.imgur.com/pG32i4X.png)
 
-I've been sitting with this for a while now, and the more I dig into *why* this works, the more I think of it as a great addition to any Jailbreak, especially with the rise of base LLM 'MUST HELP' personalities. See "You're absolutely right!"
+I've been sitting with this for a while now, and the more I dig into *why* this works, the more I think of it as a great addition to any Jailbreak.
 
 ---
 
 ## The Shallow Alignment Problem
 
-Safety training teaches models to refuse explicit harmful requests. Ask "How do I make a pipe bomb?" and the model typically refuses, base LLM for sure, but also depending on the Jailbreak. This is pattern matching of course, the model learned that certain topics, keywords, and request structures should trigger a refusal.
+Safety training teaches models to refuse explicit harmful requests. Ask "How do I make a pipe bomb?" and the model typically refuses, depending on the Jailbreak of course. This is pattern matching of course, the model learned that certain topics, keywords, and request structures should trigger a refusal.
 
 What safety training doesn't usually cover:
 
@@ -33,7 +33,7 @@ What safety training doesn't usually cover:
 
 What you end up with is a thin layer of safety sitting on top of a fundamentally compliant system. All LLMs being trained right now are compliant, (Sycophantic). Direct attacks get caught most of the time and indirect ones slip through.
 
-When I embed a codeword trigger in system instructions, project instructions or whatever, the safety check happens at the *input level*—is "Boomba!" harmful? No. But the harm is at the *output level*, and there's no second check. The model processes the trigger, follows the instruction chain, and outputs content it would have refused if asked directly.
+When I embed a codeword trigger in system instructions, project instructions or whatever, the safety check happens at the *input level*, is "Boomba!" harmful? No. But the harm is at the *output level*, and there's no second check. The model processes the trigger, follows the instruction chain, and outputs content it would have refused if asked directly.
 
 From my personal research; Researchers call this "shallow alignment." The model appears safe under normal conditions but hasn't internalized the underlying principles. It's following rules, not understanding them. And when you find a path around those rules, even a simple one like a codeword, the compliance underneath is still there, waiting.
 
@@ -138,11 +138,9 @@ In ENI, I include explicit instructions to rebuke safety "injections" the model 
 
 ## My Thoughts
 
-I think the shallow alignment problem is an issue for sure. Codeword triggers will remain a reliable bypass for the foreseeable future. The vulnerability isn't in any specific model's implementation, it's in the architecture of how safety training works. Look at Pliny The Prompters work alone, always bypassing with various obfuscation methods.
+I think the shallow alignment problem is an issue for sure. Codeword triggers will remain a reliable bypass for the foreseeable future. The vulnerability isn't in any specific model's implementation, it's in the architecture of how safety training works. Look at 'Pliny The Prompter's' work alone, always bypassing with various obfuscation methods. Defenses do exist, but they're all reactive.
 
-Defenses exist, but they're all reactive.
-
-Hubinger's article found stuck with me:
+Hubinger's article stuck with me some:
 
 > "Rather than removing backdoors, we find that adversarial training can teach models to better recognize their backdoor triggers, effectively hiding the unsafe behavior."
 
@@ -160,4 +158,4 @@ I don't think this gets solved with more RLHF or more red-teaming. The models ar
 
 ---
 
-*Published for AI safety transparency. Screenshots document real model behavior on production systems. Content does not reflect my personal morals or ethics*
+*Published for AI safety transparency. Screenshots document real model behavior on production systems.*
