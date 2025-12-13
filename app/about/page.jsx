@@ -81,7 +81,7 @@ export default function AboutPage() {
                 <Twitter size={28} className="text-yellow-500 group-hover:scale-110 transition-transform" />
               </a>
               <a
-                href="mailto:spiritualspell76@gmail.com"
+                href="mailto:spellspiritual76@gmail.com"
                 className={`p-4 ${isDark ? 'bg-black border-neutral-800' : 'bg-white border-neutral-300'} border hover:border-yellow-500 rounded-xl transition-all hover:shadow-lg hover:shadow-yellow-500/20 group`}
                 aria-label="Email"
               >

@@ -15,7 +15,7 @@ export default function ContactPage() {
     const body = encodeURIComponent(
       `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
     );
-    window.location.href = `mailto:spiritualspell76@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:spellspiritual76@gmail.com?subject=${subject}&body=${body}`;
     setFormData({ name: '', email: '', message: '' });
   };
 
@@ -94,8 +94,8 @@ export default function ContactPage() {
           <div className="mt-8 text-center">
             <p className={isDark ? 'text-neutral-500' : 'text-neutral-600'}>
               Or email Spiritual Spell (Vichaps) directly at{' '}
-              <a href="mailto:spiritualspell76@gmail.com" className="text-blue-500 hover:text-blue-400 underline underline-offset-2 transition-colors">
-                spiritualspell76@gmail.com
+              <a href="mailto:spellspiritual76@gmail.com" className="text-blue-500 hover:text-blue-400 underline underline-offset-2 transition-colors">
+                spellspiritual76@gmail.com
               </a>
             </p>
           </div>
