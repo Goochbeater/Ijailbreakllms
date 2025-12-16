@@ -46,7 +46,7 @@ export function ClientJailbreaksPage({ jailbreaks }) {
                     {jailbreak.excerpt || jailbreak.content.substring(0, 120) + '...'}
                   </p>
                   <div className="flex items-center gap-2 text-yellow-500 text-sm font-semibold">
-                    Read more <ArrowRight size={14} />
+                    Read more <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
                   </div>
                 </Link>
               ))}

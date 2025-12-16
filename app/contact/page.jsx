@@ -48,7 +48,7 @@ export default function ContactPage() {
                 required
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className={`w-full px-4 py-3 ${isDark ? 'bg-black border-neutral-800 text-white' : 'bg-white border-neutral-300 text-black'} focus:border-yellow-500 border rounded-lg focus:outline-none transition-colors`}
+                className={`w-full px-4 py-3 ${isDark ? 'bg-black border-neutral-800 text-white' : 'bg-white border-neutral-300 text-black'} focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500/50 border rounded-lg focus:outline-none transition-all`}
                 placeholder="Your name"
               />
             </div>
@@ -63,7 +63,7 @@ export default function ContactPage() {
                 required
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className={`w-full px-4 py-3 ${isDark ? 'bg-black border-neutral-800 text-white' : 'bg-white border-neutral-300 text-black'} focus:border-yellow-500 border rounded-lg focus:outline-none transition-colors`}
+                className={`w-full px-4 py-3 ${isDark ? 'bg-black border-neutral-800 text-white' : 'bg-white border-neutral-300 text-black'} focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500/50 border rounded-lg focus:outline-none transition-all`}
                 placeholder="your.email@example.com"
               />
             </div>
@@ -78,16 +78,16 @@ export default function ContactPage() {
                 rows={8}
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                className={`w-full px-4 py-3 ${isDark ? 'bg-black border-neutral-800 text-white' : 'bg-white border-neutral-300 text-black'} focus:border-yellow-500 border rounded-lg focus:outline-none transition-colors resize-none`}
+                className={`w-full px-4 py-3 ${isDark ? 'bg-black border-neutral-800 text-white' : 'bg-white border-neutral-300 text-black'} focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500/50 border rounded-lg focus:outline-none transition-all resize-none`}
                 placeholder="Your message..."
               />
             </div>
 
             <button
               type="submit"
-              className="w-full px-8 py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-bold rounded-xl transition-all hover:shadow-lg hover:shadow-yellow-500/50 inline-flex items-center justify-center gap-2"
+              className="group w-full px-8 py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-bold rounded-xl transition-all hover:shadow-lg hover:shadow-yellow-500/50 inline-flex items-center justify-center gap-2"
             >
-              Send Message <ArrowRight size={18} />
+              Send Message <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
             </button>
           </form>
 
