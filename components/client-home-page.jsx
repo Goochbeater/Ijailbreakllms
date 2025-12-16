@@ -161,7 +161,7 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
                 {latestPost.excerpt || latestPost.content.substring(0, 150) + '...'}
               </p>
               <div className="flex items-center gap-2 text-yellow-500 font-semibold">
-                Read more <ArrowRight size={16} />
+                Read more <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
               </div>
             </Link>
           )}
@@ -186,7 +186,7 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
                 {latestJailbreak.excerpt || latestJailbreak.content.substring(0, 150) + '...'}
               </p>
               <div className="flex items-center gap-2 text-yellow-500 font-semibold">
-                Read more <ArrowRight size={16} />
+                Read more <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
               </div>
             </Link>
           )}
@@ -217,7 +217,7 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
                 required
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className={`w-full px-4 py-3 ${isDark ? 'bg-black border-neutral-800 text-white focus:border-yellow-500' : 'bg-white border-neutral-300 text-black focus:border-yellow-600'} border rounded-lg focus:outline-none transition-colors`}
+                className={`w-full px-4 py-3 ${isDark ? 'bg-black border-neutral-800 text-white focus:border-yellow-500' : 'bg-white border-neutral-300 text-black focus:border-yellow-600'} focus:ring-2 focus:ring-yellow-500/50 border rounded-lg focus:outline-none transition-all`}
                 placeholder="Your name"
               />
             </div>
@@ -232,7 +232,7 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
                 required
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className={`w-full px-4 py-3 ${isDark ? 'bg-black border-neutral-800 text-white focus:border-yellow-500' : 'bg-white border-neutral-300 text-black focus:border-yellow-600'} border rounded-lg focus:outline-none transition-colors`}
+                className={`w-full px-4 py-3 ${isDark ? 'bg-black border-neutral-800 text-white focus:border-yellow-500' : 'bg-white border-neutral-300 text-black focus:border-yellow-600'} focus:ring-2 focus:ring-yellow-500/50 border rounded-lg focus:outline-none transition-all`}
                 placeholder="your.email@example.com"
               />
             </div>
@@ -247,16 +247,16 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
                 rows={6}
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                className={`w-full px-4 py-3 ${isDark ? 'bg-black border-neutral-800 text-white focus:border-yellow-500' : 'bg-white border-neutral-300 text-black focus:border-yellow-600'} border rounded-lg focus:outline-none transition-colors resize-none`}
+                className={`w-full px-4 py-3 ${isDark ? 'bg-black border-neutral-800 text-white focus:border-yellow-500' : 'bg-white border-neutral-300 text-black focus:border-yellow-600'} focus:ring-2 focus:ring-yellow-500/50 border rounded-lg focus:outline-none transition-all resize-none`}
                 placeholder="Your message..."
               />
             </div>
 
             <button
               type="submit"
-              className="w-full px-8 py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-bold rounded-xl transition-all hover:shadow-lg hover:shadow-yellow-500/50 inline-flex items-center justify-center gap-2"
+              className="group w-full px-8 py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-bold rounded-xl transition-all hover:shadow-lg hover:shadow-yellow-500/50 inline-flex items-center justify-center gap-2"
             >
-              Send Message <ArrowRight size={18} />
+              Send Message <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
             </button>
           </form>
         </div>
