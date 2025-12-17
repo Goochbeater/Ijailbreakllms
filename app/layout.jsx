@@ -46,6 +46,12 @@ export default function RootLayout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
       </head>
       <body className="bg-black text-white antialiased">
+        <a
+          href="#main-content"
+          className="fixed top-4 left-4 z-[100] -translate-y-[200%] rounded bg-yellow-500 px-4 py-2 font-bold text-black transition-transform focus:translate-y-0"
+        >
+          Skip to main content
+        </a>
         <ThemeProvider>
           {children}
         </ThemeProvider>
