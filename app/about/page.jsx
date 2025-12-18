@@ -63,7 +63,7 @@ export default function AboutPage() {
             <h2 className="text-2xl font-bold mb-6">Connect</h2>
             <div className="flex gap-6">
               <a
-                href="https://github.com/Goochbeater/Jailbreak-Guide/tree/main"
+                href="https://github.com/Goochbeater/Spiritual-Spell-Red-Teaming"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`p-4 ${isDark ? 'bg-black border-neutral-800' : 'bg-white border-neutral-300'} border hover:border-yellow-500 rounded-xl transition-all hover:shadow-lg hover:shadow-yellow-500/20 group`}
