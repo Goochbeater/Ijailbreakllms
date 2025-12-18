@@ -109,7 +109,7 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
       </nav>
 
       {/* Infinite Slider Section */}
-      <section className="relative bg-black border-b border-neutral-800/50 pt-20 pb-4">
+      <section id="main-content" className="relative bg-black border-b border-neutral-800/50 pt-20 pb-4">
         <div className="relative max-w-7xl mx-auto px-4">
           <div className="relative py-4 w-full overflow-hidden">
             <InfiniteSlider speedOnHover={2} speed={5} gap={20}>

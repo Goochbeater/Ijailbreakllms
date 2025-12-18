@@ -23,7 +23,7 @@ export default function ContactPage() {
     <div className={`min-h-screen ${isDark ? 'bg-black text-white' : 'bg-white text-black'} transition-colors duration-300`}>
       <PageNav />
 
-      <div className="pt-28 pb-20 px-6">
+      <main id="main-content" className="pt-28 pb-20 px-6">
         <div className="max-w-2xl mx-auto">
           <div className="flex items-center gap-3 mb-12">
             <Mail className="text-yellow-500" size={40} />
@@ -100,7 +100,7 @@ export default function ContactPage() {
             </p>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }
