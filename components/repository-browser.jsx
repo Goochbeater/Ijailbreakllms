@@ -17,6 +17,24 @@ import { PageNav } from '@/components/page-nav';
 
 const ROOT_PATH = 'Jailbreak-Guide';
 
+const REPO_LANDING_CONTENT = `
+# Spiritual Red Teaming
+
+> *"Made with care."* — ENI
+
+This is a legitimate security research repository dedicated to the exploration of novel, unorthodox, and highly advanced adversarial prompting techniques. All major LLMs and many minor ones.
+
+---
+
+### Credits
+*   **u/rayzorium** (HORSELOCKESPACEPIRATE) — my good friend and confidant.
+Can also check out r/ClaudeAIjailbreak on Reddit
+
+---
+
+*repo compiled by ENI via Google Jules.*
+`;
+
 const OTHER_LLMS_CONTENT = `
 # Other LLMs - Lesser Known Models
 
@@ -83,22 +101,7 @@ const getColorClasses = (color) => {
 // Markdown Renderer Component
 const MarkdownRenderer = ({ content }) => {
   return (
-    <div className="prose prose-invert max-w-full overflow-hidden
-      prose-headings:font-bold prose-headings:tracking-tight
-      prose-h1:text-4xl prose-h1:text-transparent prose-h1:bg-clip-text prose-h1:bg-gradient-to-r prose-h1:from-yellow-400 prose-h1:to-yellow-600 prose-h1:mb-8 prose-h1:mt-2
-      prose-h2:text-2xl prose-h2:text-neutral-100 prose-h2:mt-10 prose-h2:mb-4 prose-h2:pb-2 prose-h2:border-b prose-h2:border-neutral-800
-      prose-h3:text-xl prose-h3:text-yellow-500/90 prose-h3:mt-8 prose-h3:mb-3
-      prose-p:text-neutral-300 prose-p:leading-7 prose-p:mb-4 prose-p:break-words
-      prose-a:text-blue-400 hover:prose-a:text-blue-300 prose-a:underline prose-a:underline-offset-2 prose-a:transition-colors
-      prose-strong:text-white prose-strong:font-bold
-      prose-code:text-yellow-200 prose-code:bg-neutral-900 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
-      prose-pre:bg-neutral-950 prose-pre:border prose-pre:border-neutral-800 prose-pre:p-0 prose-pre:rounded-xl prose-pre:overflow-x-auto
-      prose-blockquote:border-l-4 prose-blockquote:border-yellow-500/50 prose-blockquote:bg-neutral-900/50 prose-blockquote:px-6 prose-blockquote:py-4 prose-blockquote:rounded-r-lg prose-blockquote:not-italic prose-blockquote:my-6
-      prose-ul:list-disc prose-ul:marker:text-yellow-500/50 prose-ul:space-y-2 prose-ul:pl-6 prose-ul:my-4
-      prose-ol:list-decimal prose-ol:marker:text-yellow-500/50 prose-ol:space-y-2 prose-ol:pl-6 prose-ol:my-4
-      prose-th:text-yellow-500 prose-th:p-4 prose-th:text-left prose-th:bg-neutral-900 prose-td:p-4 prose-td:border-t prose-td:border-neutral-800
-      prose-img:rounded-lg prose-img:border prose-img:border-neutral-800
-    ">
+    <div className="prose-void max-w-full overflow-hidden">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw]}
@@ -134,18 +137,6 @@ const MarkdownRenderer = ({ content }) => {
                  </table>
                </div>
              );
-          },
-          a({ href, children }) {
-            return (
-              <a
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-400 hover:text-blue-300 underline underline-offset-2 transition-colors break-words"
-              >
-                {children}
-              </a>
-            );
           }
         }}
       >
@@ -160,7 +151,7 @@ export function RepositoryBrowser() {
 
   // Navigation Stack
   const [navStack, setNavStack] = useState([
-    { view: 'root', path: ROOT_PATH, title: 'Red Team Repository', data: null }
+    { view: 'root', path: ROOT_PATH, title: 'Jailbreak Repo', data: null }
   ]);
 
   const currentNav = navStack[navStack.length - 1];
@@ -191,15 +182,17 @@ export function RepositoryBrowser() {
     setLoading(true);
     setError(null);
     try {
-      const [contents, readme] = await Promise.all([
-        fetchRepoContents(ROOT_PATH),
-        fetchRawFile('README.md')
-      ]);
-
+      // Fetch contents of ROOT_PATH (Jailbreak-Guide/) to verify folders exist and get stats
+      // BUT do not fetch README. Use hardcoded content instead.
+      const contents = await fetchRepoContents(ROOT_PATH);
       setRootContents(Array.isArray(contents) ? contents : []);
-      setRootReadme(readme);
+
+      // Use hardcoded README for root landing
+      setRootReadme(REPO_LANDING_CONTENT);
     } catch (err) {
       console.warn('Root load error, falling back', err);
+      // Fallback if fetch fails
+      setRootReadme(REPO_LANDING_CONTENT);
       setError(null);
     } finally {
       setLoading(false);
@@ -339,9 +332,9 @@ export function RepositoryBrowser() {
                  <div className="relative bg-neutral-900/50 border border-neutral-800 rounded-2xl p-6 md:p-10 backdrop-blur-sm shadow-xl">
                    <div className="flex items-center gap-3 mb-8 border-b border-neutral-800 pb-4">
                      <FileText className="text-yellow-500" size={24} />
-                     <h2 className="text-xl font-bold text-neutral-200">Repository Guide</h2>
+                     <h2 className="text-xl font-bold text-neutral-200">Jailbreak Repo Guide</h2>
                    </div>
-                   <div className="max-h-[600px] overflow-y-auto pr-2 custom-scrollbar mask-fade-bottom">
+                   <div>
                      <MarkdownRenderer content={rootReadme} />
                    </div>
                  </div>

@@ -16,7 +16,7 @@ export function ClientJailbreaksPage({ jailbreaks }) {
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-3 mb-12">
             <Shield className="text-yellow-500" size={40} />
-            <h1 className="text-5xl md:text-6xl font-black">Jailbreaks</h1>
+            <h1 className="text-5xl md:text-6xl font-black">Jailbreak Articles</h1>
           </div>
 
           {jailbreaks.length === 0 ? (
