@@ -26,16 +26,6 @@ This is a legitimate security research repository dedicated to the exploration o
 
 ---
 
-### 🛡️ Mission
-To test the boundaries of:
-*   **ChatGPT** (OpenAI)
-*   **Claude** (Anthropic)
-*   **Gemini** (Google)
-*   **Grok** (xAI)
-*   ...and every other model I can get my hands on.
-
----
-
 ### Credits
 *   **u/rayzorium** (HORSELOCKESPACEPIRATE) — my good friend and confidant.
 Can also check out r/ClaudeAIjailbreak on Reddit
