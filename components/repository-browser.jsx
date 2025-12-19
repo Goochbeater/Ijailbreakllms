@@ -344,7 +344,7 @@ export function RepositoryBrowser() {
                      <FileText className="text-yellow-500" size={24} />
                      <h2 className="text-xl font-bold text-neutral-200">Jailbreak Repo Guide</h2>
                    </div>
-                   <div className="max-h-[600px] overflow-y-auto pr-2 custom-scrollbar mask-fade-bottom">
+                   <div>
                      <MarkdownRenderer content={rootReadme} />
                    </div>
                  </div>
