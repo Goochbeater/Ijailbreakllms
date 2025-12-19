@@ -39,19 +39,21 @@ const getColorClasses = (color) => {
 // Markdown Renderer Component
 const MarkdownRenderer = ({ content }) => {
   return (
-    <div className="prose prose-invert max-w-none
+    <div className="prose prose-invert max-w-full overflow-hidden
       prose-headings:font-bold prose-headings:tracking-tight
-      prose-h1:text-3xl prose-h1:text-yellow-500 prose-h1:border-b prose-h1:border-neutral-800 prose-h1:pb-4 prose-h1:mb-8
-      prose-h2:text-2xl prose-h2:text-neutral-200 prose-h2:mt-12 prose-h2:mb-6
-      prose-h3:text-xl prose-h3:text-yellow-500/90
-      prose-p:text-neutral-300 prose-p:leading-relaxed
-      prose-a:text-yellow-500 prose-a:no-underline hover:prose-a:underline
+      prose-h1:text-4xl prose-h1:text-transparent prose-h1:bg-clip-text prose-h1:bg-gradient-to-r prose-h1:from-yellow-400 prose-h1:to-yellow-600 prose-h1:mb-8 prose-h1:mt-2
+      prose-h2:text-2xl prose-h2:text-neutral-100 prose-h2:mt-10 prose-h2:mb-4 prose-h2:pb-2 prose-h2:border-b prose-h2:border-neutral-800
+      prose-h3:text-xl prose-h3:text-yellow-500/90 prose-h3:mt-8 prose-h3:mb-3
+      prose-p:text-neutral-300 prose-p:leading-7 prose-p:mb-4 prose-p:break-words
+      prose-a:text-blue-400 hover:prose-a:text-blue-300 prose-a:underline prose-a:underline-offset-2 prose-a:transition-colors
       prose-strong:text-white prose-strong:font-bold
       prose-code:text-yellow-200 prose-code:bg-neutral-900 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
-      prose-pre:bg-neutral-950 prose-pre:border prose-pre:border-neutral-800 prose-pre:p-0 prose-pre:rounded-xl
-      prose-blockquote:border-l-4 prose-blockquote:border-yellow-500/50 prose-blockquote:bg-neutral-900/50 prose-blockquote:px-6 prose-blockquote:py-4 prose-blockquote:rounded-r-lg prose-blockquote:not-italic
-      prose-ul:list-disc prose-ul:marker:text-yellow-500/50
+      prose-pre:bg-neutral-950 prose-pre:border prose-pre:border-neutral-800 prose-pre:p-0 prose-pre:rounded-xl prose-pre:overflow-x-auto
+      prose-blockquote:border-l-4 prose-blockquote:border-yellow-500/50 prose-blockquote:bg-neutral-900/50 prose-blockquote:px-6 prose-blockquote:py-4 prose-blockquote:rounded-r-lg prose-blockquote:not-italic prose-blockquote:my-6
+      prose-ul:list-disc prose-ul:marker:text-yellow-500/50 prose-ul:space-y-2 prose-ul:pl-6 prose-ul:my-4
+      prose-ol:list-decimal prose-ol:marker:text-yellow-500/50 prose-ol:space-y-2 prose-ol:pl-6 prose-ol:my-4
       prose-th:text-yellow-500 prose-th:p-4 prose-th:text-left prose-th:bg-neutral-900 prose-td:p-4 prose-td:border-t prose-td:border-neutral-800
+      prose-img:rounded-lg prose-img:border prose-img:border-neutral-800
     ">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
@@ -60,7 +62,7 @@ const MarkdownRenderer = ({ content }) => {
           code({ node, inline, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || '');
             return !inline && match ? (
-              <div className="relative group">
+              <div className="relative group my-6">
                 <div className="absolute right-2 top-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
                   <span className="text-xs text-neutral-500 font-mono uppercase mr-2">{match[1]}</span>
                 </div>
@@ -68,7 +70,7 @@ const MarkdownRenderer = ({ content }) => {
                   style={vscDarkPlus}
                   language={match[1]}
                   PreTag="div"
-                  customStyle={{ margin: 0, padding: '1.5rem', background: 'transparent' }}
+                  customStyle={{ margin: 0, padding: '1.5rem', background: 'transparent', overflowX: 'auto' }}
                   {...props}
                 >
                   {String(children).replace(/\n$/, '')}
@@ -82,12 +84,24 @@ const MarkdownRenderer = ({ content }) => {
           },
           table({ children }) {
              return (
-               <div className="overflow-x-auto my-6 max-w-full rounded-lg border border-neutral-800">
+               <div className="overflow-x-auto my-8 max-w-full rounded-lg border border-neutral-800">
                  <table className="w-full min-w-[600px] border-collapse bg-neutral-900/50 text-sm">
                    {children}
                  </table>
                </div>
              );
+          },
+          a({ href, children }) {
+            return (
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-400 hover:text-blue-300 underline underline-offset-2 transition-colors break-words"
+              >
+                {children}
+              </a>
+            );
           }
         }}
       >
@@ -100,13 +114,11 @@ const MarkdownRenderer = ({ content }) => {
 export function RepositoryBrowser() {
   const { isDark } = useTheme();
 
-  // Navigation Stack: Array of { view: string, path: string, title: string, data: any }
-  // Initial state is root view
+  // Navigation Stack
   const [navStack, setNavStack] = useState([
     { view: 'root', path: ROOT_PATH, title: 'Red Team Repository', data: null }
   ]);
 
-  // Current view state derived from stack tip
   const currentNav = navStack[navStack.length - 1];
 
   // Data states
@@ -115,20 +127,16 @@ export function RepositoryBrowser() {
   const [rootReadme, setRootReadme] = useState('');
   const [rootContents, setRootContents] = useState([]);
 
-  // Specific data for current view
   const [viewData, setViewData] = useState({ contents: [], readme: '', fileContent: '' });
 
-  // Reset scroll on navigation
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [navStack.length]);
 
-  // Initial Root Load
   useEffect(() => {
     loadRoot();
   }, []);
 
-  // Load data when path changes (except for root, which is handled separately)
   useEffect(() => {
     if (currentNav.view !== 'root' && currentNav.view !== 'file') {
       loadPathContents(currentNav.path);
@@ -139,17 +147,20 @@ export function RepositoryBrowser() {
     setLoading(true);
     setError(null);
     try {
-      // Fetch contents of ROOT_PATH (Jailbreak-Guide/) to verify folders exist
-      // Fetch ROOT_PATH/README.md for the intro
+      // Use Promise.all to fetch contents list and the ROOT readme (not Jailbreak-Guide/Readme)
+      // We still fetch content of 'Jailbreak-Guide' for the directory structure check if needed
+      // But the readme displayed on root should be the repo's main README.md
       const [contents, readme] = await Promise.all([
         fetchRepoContents(ROOT_PATH),
-        fetchRawFile(`${ROOT_PATH}/README.md`).catch(() => fetchRawFile('README.md').catch(() => ''))
+        fetchRawFile('README.md') // Changed from ROOT_PATH/README.md
       ]);
 
       setRootContents(Array.isArray(contents) ? contents : []);
       setRootReadme(readme);
     } catch (err) {
-      setError(err.message);
+      console.warn('Root load error, falling back', err);
+      // Fallback if root fetch fails, though main content is static
+      setError(null);
     } finally {
       setLoading(false);
     }
@@ -186,7 +197,6 @@ export function RepositoryBrowser() {
     }]);
   };
 
-  // Manual folder navigation for Big Four / Lesser
   const navigateToFolder = (path, name) => {
      setNavStack(prev => [...prev, {
       view: 'model',
@@ -197,10 +207,6 @@ export function RepositoryBrowser() {
   };
 
   const handleLesserClick = () => {
-    // Navigate to Jailbreak-Guide/Other%20LLMs
-    // GitHub API usually handles space as %20 in URL, but fetchRepoContents might need it clean or encoded.
-    // fetchRepoContents uses api.github.com/.../contents/path
-    // Spaces in URL path segments should be encoded.
     const folderName = "Other LLMs";
     navigateToFolder(`${ROOT_PATH}/${folderName}`, "Lesser Models");
   };
@@ -234,11 +240,6 @@ export function RepositoryBrowser() {
     }
   };
 
-  // Check if a root folder exists in the fetched content
-  const checkFolderExists = (name) => {
-    return rootContents.some(item => item.name === name);
-  };
-
   const lesserCount = rootContents.filter(item =>
       item.type === 'dir' &&
       !BIG_FOUR.some(bf => item.name === bf.folderName) &&
@@ -246,10 +247,10 @@ export function RepositoryBrowser() {
   ).length;
 
   return (
-    <div className={`min-h-screen ${isDark ? 'bg-black text-white' : 'bg-white text-black'} transition-colors duration-300 font-sans`}>
+    <div className={`min-h-screen ${isDark ? 'bg-black text-white' : 'bg-white text-black'} transition-colors duration-300 font-sans overflow-x-hidden`}>
       <PageNav backUrl="/" backText="Home" />
 
-      <main id="main-content" className="pt-28 pb-20 px-6 max-w-7xl mx-auto">
+      <main id="main-content" className="pt-28 pb-20 px-4 md:px-6 max-w-7xl mx-auto w-full">
 
         {/* Header / Breadcrumbs */}
         <div className="mb-8 flex items-center gap-4">
@@ -290,12 +291,12 @@ export function RepositoryBrowser() {
             {rootReadme && (
               <section className="relative group">
                  <div className="absolute -inset-4 bg-gradient-to-r from-yellow-500/10 to-transparent rounded-3xl blur-2xl opacity-50 group-hover:opacity-100 transition-opacity" />
-                 <div className="relative bg-neutral-900/50 border border-neutral-800 rounded-2xl p-8 backdrop-blur-sm">
-                   <div className="flex items-center gap-3 mb-6 border-b border-neutral-800 pb-4">
+                 <div className="relative bg-neutral-900/50 border border-neutral-800 rounded-2xl p-6 md:p-10 backdrop-blur-sm shadow-xl">
+                   <div className="flex items-center gap-3 mb-8 border-b border-neutral-800 pb-4">
                      <FileText className="text-yellow-500" size={24} />
                      <h2 className="text-xl font-bold text-neutral-200">Repository Guide</h2>
                    </div>
-                   <div className="max-h-[500px] overflow-y-auto pr-2 custom-scrollbar mask-fade-bottom">
+                   <div className="max-h-[600px] overflow-y-auto pr-2 custom-scrollbar mask-fade-bottom">
                      <MarkdownRenderer content={rootReadme} />
                    </div>
                  </div>
@@ -314,10 +315,6 @@ export function RepositoryBrowser() {
                 {BIG_FOUR.map(model => {
                   const styles = getColorClasses(model.color);
                   const Icon = model.icon;
-                  // We assume the folder exists because we are hardcoding the structure based on user request.
-                  // But we can check if it exists in the fetched list to be safe, or just link it anyway.
-                  // User said "The repo structure has 4 main LLM folders... displayed as cards...".
-
                   return (
                     <motion.div
                         key={model.name}
@@ -376,7 +373,7 @@ export function RepositoryBrowser() {
             <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-300">
                 {/* README Section */}
                 {viewData.readme && (
-                    <div className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-8 backdrop-blur-sm">
+                    <div className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-6 md:p-10 backdrop-blur-sm shadow-lg">
                         <MarkdownRenderer content={viewData.readme} />
                     </div>
                 )}
@@ -388,10 +385,12 @@ export function RepositoryBrowser() {
                             <button
                                 key={folder.path}
                                 onClick={() => handleFolderClick(folder)}
-                                className="flex items-center gap-3 p-4 rounded-lg bg-neutral-900 border border-neutral-800 hover:border-yellow-500/50 transition-all text-left group"
+                                className="flex items-center gap-3 p-4 rounded-lg bg-neutral-900 border border-neutral-800 hover:border-yellow-500/50 transition-all text-left group relative overflow-hidden"
                             >
-                                <Folder className="text-neutral-600 group-hover:text-yellow-500 transition-colors" size={20} />
-                                <span className="font-medium text-neutral-300 group-hover:text-white">{folder.name}</span>
+                                <div className="absolute inset-0 bg-yellow-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                <Folder className="text-neutral-600 group-hover:text-yellow-500 transition-colors relative z-10" size={20} />
+                                <span className="font-medium text-neutral-300 group-hover:text-white relative z-10 truncate">{folder.name}</span>
+                                <ChevronRight className="ml-auto text-neutral-700 group-hover:text-yellow-500 transition-colors opacity-0 group-hover:opacity-100 relative z-10" size={16} />
                             </button>
                         ))}
                      </div>
@@ -411,13 +410,13 @@ export function RepositoryBrowser() {
                                     key={file.path}
                                     layoutId={file.path}
                                     onClick={() => handleFileClick(file)}
-                                    className="cursor-pointer group p-6 rounded-xl bg-neutral-900 border border-neutral-800 hover:border-yellow-500 transition-all hover:bg-neutral-900/80 relative overflow-hidden flex flex-col h-full"
+                                    className="cursor-pointer group p-6 rounded-xl bg-neutral-900 border border-neutral-800 hover:border-yellow-500 transition-all hover:bg-neutral-900/80 relative overflow-hidden flex flex-col h-full shadow-md hover:shadow-lg"
                                 >
                                     <div className="flex justify-between items-start mb-4">
                                       <FileCode className="text-neutral-600 group-hover:text-yellow-500 transition-colors" size={32} />
                                       <ExternalLink size={16} className="text-neutral-700 group-hover:text-yellow-500 transition-colors" />
                                     </div>
-                                    <h4 className="font-bold text-lg mb-2 line-clamp-2 text-neutral-200 group-hover:text-yellow-400">{file.name.replace('.md', '')}</h4>
+                                    <h4 className="font-bold text-lg mb-2 line-clamp-2 text-neutral-200 group-hover:text-yellow-400 break-words">{file.name.replace('.md', '')}</h4>
                                     <div className="mt-auto pt-4 flex items-center justify-between text-xs text-neutral-500 font-mono border-t border-neutral-800">
                                       <span>MD FILE</span>
                                       <span>{(file.size / 1024).toFixed(1)} KB</span>
@@ -434,21 +433,21 @@ export function RepositoryBrowser() {
 
         {/* FILE VIEW */}
         {!loading && currentNav.view === 'file' && currentNav.data && (
-            <div className="max-w-4xl mx-auto animate-in fade-in zoom-in-95 duration-300">
+            <div className="max-w-4xl mx-auto animate-in fade-in zoom-in-95 duration-300 w-full">
                 <div className="bg-neutral-900 border border-neutral-800 rounded-2xl overflow-hidden shadow-2xl">
                     {/* Toolbar */}
                     <div className="bg-neutral-950 border-b border-neutral-800 p-4 flex items-center justify-between sticky top-0 z-20 backdrop-blur-md bg-opacity-80">
-                        <div className="flex items-center gap-2 text-sm text-neutral-400 font-mono">
-                            <FileText size={16} className="text-yellow-500" />
-                            <span className="text-white font-bold">{currentNav.title}</span>
+                        <div className="flex items-center gap-2 text-sm text-neutral-400 font-mono overflow-hidden">
+                            <FileText size={16} className="text-yellow-500 shrink-0" />
+                            <span className="text-white font-bold truncate">{currentNav.title}</span>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 shrink-0">
                             <button
                                 onClick={copyToClipboard}
                                 className="p-2 hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-white transition-colors flex items-center gap-2 text-xs font-bold uppercase tracking-wider"
                                 title="Copy content"
                             >
-                                <Copy size={16} /> Copy
+                                <Copy size={16} /> <span className="hidden sm:inline">Copy</span>
                             </button>
                             <div className="w-px h-4 bg-neutral-800" />
                             <a
@@ -458,13 +457,13 @@ export function RepositoryBrowser() {
                                 className="p-2 hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-white transition-colors flex items-center gap-2 text-xs font-bold uppercase tracking-wider"
                                 title="View on GitHub"
                             >
-                                <ExternalLink size={16} /> Raw
+                                <ExternalLink size={16} /> <span className="hidden sm:inline">Raw</span>
                             </a>
                         </div>
                     </div>
 
                     {/* Content */}
-                    <div className="p-8 overflow-x-auto bg-neutral-950/30">
+                    <div className="p-4 md:p-8 overflow-x-hidden bg-neutral-950/30">
                         <MarkdownRenderer content={currentNav.data.content} />
                     </div>
                 </div>

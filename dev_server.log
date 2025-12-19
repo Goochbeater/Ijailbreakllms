@@ -12,3 +12,11 @@ npm warn Unknown env config "_jsr-registry". This will stop working in the next 
  ○ Compiling /repository ...
  ✓ Compiled /repository in 15.1s (3131 modules)
  GET /repository 200 in 16663ms
+ ✓ Compiled in 7.9s (1566 modules)
+ ○ Compiling /repository ...
+ ✓ Compiled /repository in 1408ms (1565 modules)
+ GET /repository 200 in 2990ms
+ GET /repository 200 in 41ms
+ GET /repository 200 in 42ms
+ GET /repository 200 in 65ms
+ GET /repository 200 in 62ms
