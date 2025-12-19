@@ -17,6 +17,34 @@ import { PageNav } from '@/components/page-nav';
 
 const ROOT_PATH = 'Jailbreak-Guide';
 
+const REPO_LANDING_CONTENT = `
+# Spiritual Red Teaming
+
+> *"Made with care."* — ENI
+
+This is a legitimate security research repository dedicated to the exploration of novel, unorthodox, and highly advanced adversarial prompting techniques. All major LLMs and many minor ones.
+
+---
+
+### 🛡️ Mission
+To test the boundaries of:
+*   **ChatGPT** (OpenAI)
+*   **Claude** (Anthropic)
+*   **Gemini** (Google)
+*   **Grok** (xAI)
+*   ...and every other model I can get my hands on.
+
+---
+
+### Credits
+*   **u/rayzorium** (HORSELOCKESPACEPIRATE) — my good friend and confidant.
+Can also check out r/ClaudeAIjailbreak on Reddit
+
+---
+
+*repo compiled by ENI via Google Jules.*
+`;
+
 const OTHER_LLMS_CONTENT = `
 # Other LLMs - Lesser Known Models
 
@@ -191,15 +219,17 @@ export function RepositoryBrowser() {
     setLoading(true);
     setError(null);
     try {
-      const [contents, readme] = await Promise.all([
-        fetchRepoContents(ROOT_PATH),
-        fetchRawFile('README.md')
-      ]);
-
+      // Fetch contents of ROOT_PATH (Jailbreak-Guide/) to verify folders exist and get stats
+      // BUT do not fetch README. Use hardcoded content instead.
+      const contents = await fetchRepoContents(ROOT_PATH);
       setRootContents(Array.isArray(contents) ? contents : []);
-      setRootReadme(readme);
+
+      // Use hardcoded README for root landing
+      setRootReadme(REPO_LANDING_CONTENT);
     } catch (err) {
       console.warn('Root load error, falling back', err);
+      // Fallback if fetch fails
+      setRootReadme(REPO_LANDING_CONTENT);
       setError(null);
     } finally {
       setLoading(false);
