@@ -160,7 +160,7 @@ export function RepositoryBrowser() {
 
   // Navigation Stack
   const [navStack, setNavStack] = useState([
-    { view: 'root', path: ROOT_PATH, title: 'Red Team Repository', data: null }
+    { view: 'root', path: ROOT_PATH, title: 'Jailbreak Repo', data: null }
   ]);
 
   const currentNav = navStack[navStack.length - 1];
@@ -339,7 +339,7 @@ export function RepositoryBrowser() {
                  <div className="relative bg-neutral-900/50 border border-neutral-800 rounded-2xl p-6 md:p-10 backdrop-blur-sm shadow-xl">
                    <div className="flex items-center gap-3 mb-8 border-b border-neutral-800 pb-4">
                      <FileText className="text-yellow-500" size={24} />
-                     <h2 className="text-xl font-bold text-neutral-200">Repository Guide</h2>
+                     <h2 className="text-xl font-bold text-neutral-200">Jailbreak Repo Guide</h2>
                    </div>
                    <div className="max-h-[600px] overflow-y-auto pr-2 custom-scrollbar mask-fade-bottom">
                      <MarkdownRenderer content={rootReadme} />

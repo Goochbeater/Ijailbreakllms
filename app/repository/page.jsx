@@ -1,7 +1,7 @@
 import { RepositoryBrowser } from '@/components/repository-browser';
 
 export const metadata = {
-  title: 'Jailbreak Repository - Spiritual Spell',
+  title: 'Jailbreak Repo - Spiritual Spell',
   description: 'Live red-teaming repository explorer connected to GitHub.',
 };
 
