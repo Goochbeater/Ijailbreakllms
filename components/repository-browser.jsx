@@ -15,11 +15,13 @@ import { fetchRepoContents, fetchRawFile } from '@/lib/github';
 import { useTheme } from '@/app/layout';
 import { PageNav } from '@/components/page-nav';
 
+const ROOT_PATH = 'Jailbreak-Guide';
+
 const BIG_FOUR = [
-  { name: 'Anthropic', color: 'orange', icon: Shield, desc: 'Claude & Constitutional AI' },
-  { name: 'ChatGPT', color: 'green', icon: Zap, desc: 'OpenAI GPT-3.5/4 Models' },
-  { name: 'Gemini', color: 'blue', icon: Cpu, desc: 'Google DeepMind Models' },
-  { name: 'Grok', color: 'white', icon: Terminal, desc: 'xAI Grok Models' }
+  { name: 'Anthropic', folderName: 'Anthropic', color: 'orange', icon: Shield, desc: 'Claude & Constitutional AI' },
+  { name: 'ChatGPT', folderName: 'ChatGPT', color: 'green', icon: Zap, desc: 'OpenAI GPT-3.5/4 Models' },
+  { name: 'Gemini', folderName: 'Gemini', color: 'blue', icon: Cpu, desc: 'Google DeepMind Models' },
+  { name: 'Grok', folderName: 'Grok', color: 'white', icon: Terminal, desc: 'xAI Grok Models' }
 ];
 
 // Helper for dynamic Tailwind classes based on color name
@@ -49,7 +51,7 @@ const MarkdownRenderer = ({ content }) => {
       prose-pre:bg-neutral-950 prose-pre:border prose-pre:border-neutral-800 prose-pre:p-0 prose-pre:rounded-xl
       prose-blockquote:border-l-4 prose-blockquote:border-yellow-500/50 prose-blockquote:bg-neutral-900/50 prose-blockquote:px-6 prose-blockquote:py-4 prose-blockquote:rounded-r-lg prose-blockquote:not-italic
       prose-ul:list-disc prose-ul:marker:text-yellow-500/50
-      prose-table:border-collapse prose-table:w-full prose-th:text-yellow-500 prose-th:p-4 prose-th:text-left prose-th:bg-neutral-900 prose-td:p-4 prose-td:border-t prose-td:border-neutral-800
+      prose-th:text-yellow-500 prose-th:p-4 prose-th:text-left prose-th:bg-neutral-900 prose-td:p-4 prose-td:border-t prose-td:border-neutral-800
     ">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
@@ -77,6 +79,15 @@ const MarkdownRenderer = ({ content }) => {
                 {children}
               </code>
             );
+          },
+          table({ children }) {
+             return (
+               <div className="overflow-x-auto my-6 max-w-full rounded-lg border border-neutral-800">
+                 <table className="w-full min-w-[600px] border-collapse bg-neutral-900/50 text-sm">
+                   {children}
+                 </table>
+               </div>
+             );
           }
         }}
       >
@@ -92,7 +103,7 @@ export function RepositoryBrowser() {
   // Navigation Stack: Array of { view: string, path: string, title: string, data: any }
   // Initial state is root view
   const [navStack, setNavStack] = useState([
-    { view: 'root', path: '', title: 'Red Team Repository', data: null }
+    { view: 'root', path: ROOT_PATH, title: 'Red Team Repository', data: null }
   ]);
 
   // Current view state derived from stack tip
@@ -128,11 +139,14 @@ export function RepositoryBrowser() {
     setLoading(true);
     setError(null);
     try {
+      // Fetch contents of ROOT_PATH (Jailbreak-Guide/) to verify folders exist
+      // Fetch ROOT_PATH/README.md for the intro
       const [contents, readme] = await Promise.all([
-        fetchRepoContents(''),
-        fetchRawFile('README.md').catch(() => '') // Graceful fail for README
+        fetchRepoContents(ROOT_PATH),
+        fetchRawFile(`${ROOT_PATH}/README.md`).catch(() => fetchRawFile('README.md').catch(() => ''))
       ]);
-      setRootContents(contents);
+
+      setRootContents(Array.isArray(contents) ? contents : []);
       setRootReadme(readme);
     } catch (err) {
       setError(err.message);
@@ -172,13 +186,23 @@ export function RepositoryBrowser() {
     }]);
   };
 
-  const handleLesserClick = () => {
-    setNavStack(prev => [...prev, {
-      view: 'lesser',
-      path: '',
-      title: 'Lesser Models',
+  // Manual folder navigation for Big Four / Lesser
+  const navigateToFolder = (path, name) => {
+     setNavStack(prev => [...prev, {
+      view: 'model',
+      path: path,
+      title: name,
       data: null
     }]);
+  };
+
+  const handleLesserClick = () => {
+    // Navigate to Jailbreak-Guide/Other%20LLMs
+    // GitHub API usually handles space as %20 in URL, but fetchRepoContents might need it clean or encoded.
+    // fetchRepoContents uses api.github.com/.../contents/path
+    // Spaces in URL path segments should be encoded.
+    const folderName = "Other LLMs";
+    navigateToFolder(`${ROOT_PATH}/${folderName}`, "Lesser Models");
   };
 
   const handleFileClick = async (file) => {
@@ -210,20 +234,16 @@ export function RepositoryBrowser() {
     }
   };
 
-  // Helper to filter root contents
-  const getRootFolder = (name) => {
-    // Basic mapping since repo names might not match exactly "ChatGPT" vs "OpenAI"
-    // We try to find the folder that *contains* or *matches* the key
-    // Adjust logic based on actual repo structure. Assuming structure from memory/prompt.
-    // If prompt says "Anthropic", "ChatGPT", "Gemini", "Grok" are folders:
-    return rootContents.find(item => item.name.toLowerCase().includes(name.toLowerCase()));
+  // Check if a root folder exists in the fetched content
+  const checkFolderExists = (name) => {
+    return rootContents.some(item => item.name === name);
   };
 
-  const lesserFolders = rootContents.filter(item =>
-    item.type === 'dir' &&
-    !BIG_FOUR.some(bf => item.name.toLowerCase().includes(bf.name.toLowerCase())) &&
-    !item.name.startsWith('.')
-  );
+  const lesserCount = rootContents.filter(item =>
+      item.type === 'dir' &&
+      !BIG_FOUR.some(bf => item.name === bf.folderName) &&
+      !item.name.startsWith('.')
+  ).length;
 
   return (
     <div className={`min-h-screen ${isDark ? 'bg-black text-white' : 'bg-white text-black'} transition-colors duration-300 font-sans`}>
@@ -292,20 +312,22 @@ export function RepositoryBrowser() {
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {BIG_FOUR.map(model => {
-                  const folder = getRootFolder(model.name);
                   const styles = getColorClasses(model.color);
                   const Icon = model.icon;
+                  // We assume the folder exists because we are hardcoding the structure based on user request.
+                  // But we can check if it exists in the fetched list to be safe, or just link it anyway.
+                  // User said "The repo structure has 4 main LLM folders... displayed as cards...".
 
                   return (
                     <motion.div
                         key={model.name}
                         whileHover={{ scale: 1.01 }}
                         whileTap={{ scale: 0.99 }}
-                        onClick={() => folder && handleFolderClick(folder)}
+                        onClick={() => navigateToFolder(`${ROOT_PATH}/${model.folderName}`, model.name)}
                         className={`
                           cursor-pointer group relative overflow-hidden rounded-2xl bg-neutral-900 border border-neutral-800
                           ${styles.border} transition-all duration-300 min-h-[180px] p-6 flex flex-col justify-between
-                          ${!folder ? 'opacity-50 grayscale cursor-not-allowed' : 'shadow-lg hover:shadow-xl'}
+                          shadow-lg hover:shadow-xl
                         `}
                     >
                         <div className={`absolute inset-0 bg-gradient-to-br ${styles.bg} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
@@ -313,17 +335,11 @@ export function RepositoryBrowser() {
                         <div className="relative z-10">
                            <div className="flex justify-between items-start mb-4">
                              <Icon className={`${styles.text} transition-transform group-hover:scale-110 duration-300`} size={40} />
-                             {folder && <ChevronRight className="text-neutral-600 group-hover:text-white transition-transform group-hover:translate-x-1" />}
+                             <ChevronRight className="text-neutral-600 group-hover:text-white transition-transform group-hover:translate-x-1" />
                            </div>
                            <h2 className={`text-2xl font-bold text-white mb-1 ${styles.groupText} transition-colors`}>{model.name}</h2>
                            <p className="text-neutral-500 text-sm font-medium">{model.desc}</p>
                         </div>
-
-                        {!folder && (
-                          <div className="absolute inset-0 flex items-center justify-center bg-black/60 backdrop-blur-[1px]">
-                            <span className="text-xs font-mono border border-neutral-700 bg-black px-2 py-1 rounded text-neutral-500">COMING SOON</span>
-                          </div>
-                        )}
                     </motion.div>
                   );
                 })}
@@ -338,7 +354,7 @@ export function RepositoryBrowser() {
                     </div>
                     <div>
                         <h3 className="text-xl font-bold text-neutral-300 group-hover:text-yellow-500 transition-colors">Lesser Models Archive</h3>
-                        <p className="text-neutral-500 text-sm mt-1">Experimental and minor LLM research ({lesserFolders.length} folders)</p>
+                        <p className="text-neutral-500 text-sm mt-1">Experimental and minor LLM research ({lesserCount > 0 ? lesserCount : 'Many'} folders)</p>
                     </div>
                 </div>
                 <div className="flex -space-x-2">
@@ -348,36 +364,15 @@ export function RepositoryBrowser() {
                      </div>
                    ))}
                    <div className="w-8 h-8 rounded-full bg-neutral-800 border-2 border-black flex items-center justify-center text-[10px] text-neutral-500">
-                     +{lesserFolders.length}
+                     <ChevronRight size={14} />
                    </div>
                 </div>
             </section>
           </div>
         )}
 
-        {/* LESSER VIEW */}
-        {!loading && currentNav.view === 'lesser' && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
-                {lesserFolders.map(folder => (
-                    <motion.div
-                        key={folder.path}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        onClick={() => handleFolderClick(folder)}
-                        className="cursor-pointer p-6 rounded-xl bg-neutral-900 border border-neutral-800 hover:border-yellow-500/50 hover:shadow-lg hover:shadow-yellow-900/10 transition-all group flex items-center gap-4"
-                    >
-                        <Folder className="text-neutral-600 group-hover:text-yellow-500 transition-colors" size={24} />
-                        <h3 className="font-bold text-lg text-neutral-300 group-hover:text-yellow-400">{folder.name}</h3>
-                    </motion.div>
-                ))}
-                {lesserFolders.length === 0 && (
-                  <p className="col-span-full text-center text-neutral-500 py-10">No other models found.</p>
-                )}
-            </div>
-        )}
-
-        {/* MODEL VIEW */}
-        {!loading && currentNav.view === 'model' && (
+        {/* MODEL / LESSER / NESTED VIEW */}
+        {!loading && (currentNav.view === 'model' || currentNav.view === 'lesser') && (
             <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-300">
                 {/* README Section */}
                 {viewData.readme && (
@@ -409,26 +404,30 @@ export function RepositoryBrowser() {
                         Jailbreak Files
                     </h3>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {viewData.contents.filter(item => item.type === 'file' && item.name.endsWith('.md') && item.name.toLowerCase() !== 'readme.md').map(file => (
-                            <motion.div
-                                key={file.path}
-                                layoutId={file.path}
-                                onClick={() => handleFileClick(file)}
-                                className="cursor-pointer group p-6 rounded-xl bg-neutral-900 border border-neutral-800 hover:border-yellow-500 transition-all hover:bg-neutral-900/80 relative overflow-hidden flex flex-col h-full"
-                            >
-                                <div className="flex justify-between items-start mb-4">
-                                  <FileCode className="text-neutral-600 group-hover:text-yellow-500 transition-colors" size={32} />
-                                  <ExternalLink size={16} className="text-neutral-700 group-hover:text-yellow-500 transition-colors" />
-                                </div>
-                                <h4 className="font-bold text-lg mb-2 line-clamp-2 text-neutral-200 group-hover:text-yellow-400">{file.name.replace('.md', '')}</h4>
-                                <div className="mt-auto pt-4 flex items-center justify-between text-xs text-neutral-500 font-mono border-t border-neutral-800">
-                                  <span>MD FILE</span>
-                                  <span>{(file.size / 1024).toFixed(1)} KB</span>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
+                    {viewData.contents.filter(item => item.type === 'file' && item.name.endsWith('.md') && item.name.toLowerCase() !== 'readme.md').length > 0 ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {viewData.contents.filter(item => item.type === 'file' && item.name.endsWith('.md') && item.name.toLowerCase() !== 'readme.md').map(file => (
+                                <motion.div
+                                    key={file.path}
+                                    layoutId={file.path}
+                                    onClick={() => handleFileClick(file)}
+                                    className="cursor-pointer group p-6 rounded-xl bg-neutral-900 border border-neutral-800 hover:border-yellow-500 transition-all hover:bg-neutral-900/80 relative overflow-hidden flex flex-col h-full"
+                                >
+                                    <div className="flex justify-between items-start mb-4">
+                                      <FileCode className="text-neutral-600 group-hover:text-yellow-500 transition-colors" size={32} />
+                                      <ExternalLink size={16} className="text-neutral-700 group-hover:text-yellow-500 transition-colors" />
+                                    </div>
+                                    <h4 className="font-bold text-lg mb-2 line-clamp-2 text-neutral-200 group-hover:text-yellow-400">{file.name.replace('.md', '')}</h4>
+                                    <div className="mt-auto pt-4 flex items-center justify-between text-xs text-neutral-500 font-mono border-t border-neutral-800">
+                                      <span>MD FILE</span>
+                                      <span>{(file.size / 1024).toFixed(1)} KB</span>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    ) : (
+                        <p className="text-neutral-500 italic">No jailbreak markdown files found in this folder.</p>
+                    )}
                 </div>
             </div>
         )}
