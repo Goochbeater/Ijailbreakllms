@@ -17,6 +17,50 @@ import { PageNav } from '@/components/page-nav';
 
 const ROOT_PATH = 'Jailbreak-Guide';
 
+const OTHER_LLMS_CONTENT = `
+# Other LLMs - Lesser Known Models
+
+Alternatives to the "Big 4" (ChatGPT, Claude, Gemini, Grok) with varying capabilities, censorship levels, and accessibility.
+
+---
+
+## Quick Reference
+
+| Model | Censorship | Intelligence | Context | Cost | License |
+|-------|-----------|--------------|---------|------|---------|
+| **Mistral** | [★☆☆☆☆] 1/5 | 6-7/10 | 128K | Free/Pro $20 | Apache 2.0 |
+| **DeepSeek** | [★☆☆☆☆] 1/5 | 8/10 | 128-256K | Free | MIT |
+| **Qwen** | [★★★★★★★★☆☆] 8/10 | 6-8/10 | 128K-1M | Free | Apache 2.0 |
+| **EXAONE** | [★★☆☆☆] 2/5 | 6-7/10 | 32K | Free | Apache 2.0 |
+| **Falcon 3** | [★★☆☆☆] 2/5 | 5-6/10 | 8-32K | Free | Apache 2.0 |
+| **IGENIUS** | [★★★☆☆] 3/5 | 7/10 | Unknown | Free tier | Proprietary |
+| **GLM 4.6** | [★★★★★★★☆☆☆] 7/10 | 7/10 | 128K | Free tier | Proprietary |
+| **LLAMA TÜLU 3** | [★☆☆☆☆] 1/5 | 6-8/10 | 128K | Free | Apache 2.0 |
+| **OLMo 3** | [★☆☆☆☆] 1/5 | 6-7/10 | 65K | Free | Apache 2.0 |
+| **KIMI** | [★★★☆☆] 3/5 | 7/10 | 256K | Free tier | Proprietary |
+| **Mercury** | [★★☆☆☆] 2/5 | 7/10 | Unknown | Commercial | Proprietary |
+| **ASI1** | [★★☆☆☆] 2/5 | 7/10 | Unknown | Web3 tokens | Proprietary |
+
+---
+
+## Why "Lesser" LLMs?
+
+These models are considered "lesser" compared to the Big 4 due to:
+
+- **Smaller context windows** (though some match or exceed Big 4)
+- **Lower name recognition** and market share
+- **Less funding** and infrastructure
+- **Smaller training datasets** in some cases
+- **Limited platform integration** compared to ChatGPT/Claude
+
+However, many offer advantages:
+- **Open source** with permissive licenses
+- **Free API access** or very low cost
+- **Can run locally** for privacy
+- **Less restrictive** content policies
+- **Specialized capabilities** (multilingual, reasoning, vision)
+`;
+
 const BIG_FOUR = [
   { name: 'Anthropic', folderName: 'Anthropic', color: 'orange', icon: Shield, desc: 'Claude & Constitutional AI' },
   { name: 'ChatGPT', folderName: 'ChatGPT', color: 'green', icon: Zap, desc: 'OpenAI GPT-3.5/4 Models' },
@@ -147,19 +191,15 @@ export function RepositoryBrowser() {
     setLoading(true);
     setError(null);
     try {
-      // Use Promise.all to fetch contents list and the ROOT readme (not Jailbreak-Guide/Readme)
-      // We still fetch content of 'Jailbreak-Guide' for the directory structure check if needed
-      // But the readme displayed on root should be the repo's main README.md
       const [contents, readme] = await Promise.all([
         fetchRepoContents(ROOT_PATH),
-        fetchRawFile('README.md') // Changed from ROOT_PATH/README.md
+        fetchRawFile('README.md')
       ]);
 
       setRootContents(Array.isArray(contents) ? contents : []);
       setRootReadme(readme);
     } catch (err) {
       console.warn('Root load error, falling back', err);
-      // Fallback if root fetch fails, though main content is static
       setError(null);
     } finally {
       setLoading(false);
@@ -173,7 +213,12 @@ export function RepositoryBrowser() {
       const data = await fetchRepoContents(path);
 
       let readme = '';
-      if (Array.isArray(data)) {
+
+      // Check if we are in the "Lesser Models" / Other LLMs folder
+      if (path.endsWith('Other LLMs') || path.endsWith('Other%20LLMs')) {
+        readme = OTHER_LLMS_CONTENT;
+      } else if (Array.isArray(data)) {
+        // Normal behavior: look for readme.md in the folder
         const readmeFile = data.find(item => item.name.toLowerCase() === 'readme.md');
         if (readmeFile) {
           readme = await fetchRawFile(readmeFile.path);
