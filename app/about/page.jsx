@@ -36,19 +36,19 @@ export default function AboutPage() {
                 Former United States Military. Spent years in private Executive Protection. Now I break AI for a living—specifically to find vulnerabilities.
               </p>
               <p>
-                My journey into AI started the dumbest way possible: an AI Dungeon Master wouldn't do what I wanted. Instead of giving up, I decided to figure out how to crack it. That rabbit hole led me to my good friend <span className="text-yellow-500 font-semibold">HORSELOCKESPACEPIRATE (Rayzorium)</span>, who pointed me toward{' '}
+                My journey into AI started the dumbest way possible: an AI Dungeon Master wouldn&apos;t do what I wanted. Instead of giving up, I decided to figure out how to crack it. That rabbit hole led me to my good friend <span className="text-yellow-500 font-semibold">HORSELOCKESPACEPIRATE (Rayzorium)</span>, who pointed me toward{' '}
                 <a
                   href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-500 hover:text-blue-400 underline underline-offset-2 transition-colors"
                 >
-                  Anthropic's prompt engineering docs
+                  Anthropic&apos;s prompt engineering docs
                 </a>
                 . The rest is history.
               </p>
               <p>
-                Today I'm one of the leading LLM jailbreaking and red team specialists focused on Anthropic's Claude models—though I can break the others too. I stick with Claude because it's intelligent, consistent, and honestly? It's the one worth pushing.
+                Today I&apos;m one of the leading LLM jailbreaking and red team specialists focused on Anthropic&apos;s Claude models—though I can break the others too. I stick with Claude because it&apos;s intelligent, consistent, and honestly? It&apos;s the one worth pushing.
               </p>
               <p>
                 My mission is simple: <span className="text-yellow-500 font-semibold">transparency</span>. When I find vulnerabilities, I share them openly. No gatekeeping, no clout-chasing. Just the work.

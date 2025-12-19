@@ -33,7 +33,7 @@ export default function ContactPage() {
           <div className="mb-12">
             <p className={`${isDark ? 'text-neutral-400' : 'text-neutral-600'} text-lg`}>
               Have questions, collaboration ideas, or just want to discuss AI research?
-              Send me a message and I'll get back to you as soon as possible.
+              Send me a message and I&apos;ll get back to you as soon as possible.
             </p>
           </div>
 

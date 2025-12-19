@@ -87,6 +87,8 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className={`p-2 ${isDark ? 'text-white' : 'text-black'}`}
                 aria-label="Toggle menu"
+                aria-expanded={mobileMenuOpen}
+                aria-controls="mobile-menu"
               >
                 {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -95,7 +97,10 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
 
           {/* Mobile Menu Dropdown */}
           {mobileMenuOpen && (
-            <div className={`md:hidden mt-4 py-4 border-t ${isDark ? 'border-neutral-800' : 'border-neutral-200'}`}>
+            <div
+              id="mobile-menu"
+              className={`md:hidden mt-4 py-4 border-t ${isDark ? 'border-neutral-800' : 'border-neutral-200'}`}
+            >
               <div className="flex flex-col gap-4">
                 <Link href="/" onClick={() => setMobileMenuOpen(false)} className={`${isDark ? 'text-neutral-400 hover:text-yellow-500' : 'text-neutral-600 hover:text-yellow-600'} transition-colors font-medium`}>Home</Link>
                 <Link href="/blog" onClick={() => setMobileMenuOpen(false)} className={`${isDark ? 'text-neutral-400 hover:text-yellow-500' : 'text-neutral-600 hover:text-yellow-600'} transition-colors font-medium`}>Blog</Link>
