@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Folder, FileText, ArrowLeft, ArrowRight, Terminal, Copy, ExternalLink,
-  FileCode, Shield, Zap, Box, Layers, Cpu, Database, ChevronRight
+  FileCode, Shield, Zap, Box, Layers, Cpu, Database, ChevronRight, Check
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -163,6 +163,7 @@ export function RepositoryBrowser() {
   const [rootContents, setRootContents] = useState([]);
 
   const [viewData, setViewData] = useState({ contents: [], readme: '', fileContent: '' });
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -275,6 +276,8 @@ export function RepositoryBrowser() {
   const copyToClipboard = () => {
     if (currentNav.data?.content) {
       navigator.clipboard.writeText(currentNav.data.content);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     }
   };
 
@@ -484,8 +487,10 @@ export function RepositoryBrowser() {
                                 onClick={copyToClipboard}
                                 className="p-2 hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-white transition-colors flex items-center gap-2 text-xs font-bold uppercase tracking-wider"
                                 title="Copy content"
+                                aria-label={copied ? "Copied successfully" : "Copy content"}
                             >
-                                <Copy size={16} /> <span className="hidden sm:inline">Copy</span>
+                                {copied ? <Check size={16} className="text-green-500" /> : <Copy size={16} />}
+                                <span className="hidden sm:inline">{copied ? "Copied!" : "Copy"}</span>
                             </button>
                             <div className="w-px h-4 bg-neutral-800" />
                             <a
@@ -494,6 +499,7 @@ export function RepositoryBrowser() {
                                 rel="noopener noreferrer"
                                 className="p-2 hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-white transition-colors flex items-center gap-2 text-xs font-bold uppercase tracking-wider"
                                 title="View on GitHub"
+                                aria-label="View raw file on GitHub"
                             >
                                 <ExternalLink size={16} /> <span className="hidden sm:inline">Raw</span>
                             </a>
