@@ -357,7 +357,7 @@ export function RepositoryBrowser() {
                   const styles = getColorClasses(model.color);
                   const Icon = model.icon;
                   return (
-                    <motion.div
+                    <motion.button
                         key={model.name}
                         whileHover={{ scale: 1.01 }}
                         whileTap={{ scale: 0.99 }}
@@ -365,7 +365,7 @@ export function RepositoryBrowser() {
                         className={`
                           cursor-pointer group relative overflow-hidden rounded-2xl bg-neutral-900 border border-neutral-800
                           ${styles.border} transition-all duration-300 min-h-[180px] p-6 flex flex-col justify-between
-                          shadow-lg hover:shadow-xl
+                          shadow-lg hover:shadow-xl w-full text-left
                         `}
                     >
                         <div className={`absolute inset-0 bg-gradient-to-br ${styles.bg} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
@@ -378,14 +378,14 @@ export function RepositoryBrowser() {
                            <h2 className={`text-2xl font-bold text-white mb-1 ${styles.groupText} transition-colors`}>{model.name}</h2>
                            <p className="text-neutral-500 text-sm font-medium">{model.desc}</p>
                         </div>
-                    </motion.div>
+                    </motion.button>
                   );
                 })}
               </div>
             </section>
 
             {/* Lesser Models Card */}
-            <section onClick={handleLesserClick} className="cursor-pointer group relative rounded-2xl bg-neutral-950 border-2 border-dashed border-neutral-800 hover:border-yellow-500/50 p-8 flex items-center justify-between hover:bg-neutral-900/50 transition-all">
+            <button onClick={handleLesserClick} className="w-full text-left cursor-pointer group relative rounded-2xl bg-neutral-950 border-2 border-dashed border-neutral-800 hover:border-yellow-500/50 p-8 flex items-center justify-between hover:bg-neutral-900/50 transition-all">
                 <div className="flex items-center gap-6">
                     <div className="p-4 rounded-xl bg-neutral-900 group-hover:bg-neutral-800 transition-colors">
                       <Layers className="text-neutral-500 group-hover:text-yellow-500 transition-colors" size={32} />
@@ -405,7 +405,7 @@ export function RepositoryBrowser() {
                      <ChevronRight size={14} />
                    </div>
                 </div>
-            </section>
+            </button>
           </div>
         )}
 
@@ -447,11 +447,11 @@ export function RepositoryBrowser() {
                     {viewData.contents.filter(item => item.type === 'file' && item.name.endsWith('.md') && item.name.toLowerCase() !== 'readme.md').length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {viewData.contents.filter(item => item.type === 'file' && item.name.endsWith('.md') && item.name.toLowerCase() !== 'readme.md').map(file => (
-                                <motion.div
+                                <motion.button
                                     key={file.path}
                                     layoutId={file.path}
                                     onClick={() => handleFileClick(file)}
-                                    className="cursor-pointer group p-6 rounded-xl bg-neutral-900 border border-neutral-800 hover:border-yellow-500 transition-all hover:bg-neutral-900/80 relative overflow-hidden flex flex-col h-full shadow-md hover:shadow-lg"
+                                    className="w-full text-left cursor-pointer group p-6 rounded-xl bg-neutral-900 border border-neutral-800 hover:border-yellow-500 transition-all hover:bg-neutral-900/80 relative overflow-hidden flex flex-col h-full shadow-md hover:shadow-lg"
                                 >
                                     <div className="flex justify-between items-start mb-4">
                                       <FileCode className="text-neutral-600 group-hover:text-yellow-500 transition-colors" size={32} />
@@ -462,7 +462,7 @@ export function RepositoryBrowser() {
                                       <span>MD FILE</span>
                                       <span>{(file.size / 1024).toFixed(1)} KB</span>
                                     </div>
-                                </motion.div>
+                                </motion.button>
                             ))}
                         </div>
                     ) : (
