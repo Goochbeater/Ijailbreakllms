@@ -365,7 +365,7 @@ export function RepositoryBrowser() {
                         className={`
                           cursor-pointer group relative overflow-hidden rounded-2xl bg-neutral-900 border border-neutral-800
                           ${styles.border} transition-all duration-300 min-h-[180px] p-6 flex flex-col justify-between
-                          shadow-lg hover:shadow-xl w-full text-left
+                          shadow-lg hover:shadow-xl w-full text-left focus-visible:ring-2 focus-visible:ring-yellow-500/50 focus:outline-none
                         `}
                     >
                         <div className={`absolute inset-0 bg-gradient-to-br ${styles.bg} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
@@ -385,7 +385,7 @@ export function RepositoryBrowser() {
             </section>
 
             {/* Lesser Models Card */}
-            <button onClick={handleLesserClick} className="w-full text-left cursor-pointer group relative rounded-2xl bg-neutral-950 border-2 border-dashed border-neutral-800 hover:border-yellow-500/50 p-8 flex items-center justify-between hover:bg-neutral-900/50 transition-all">
+            <button onClick={handleLesserClick} className="w-full text-left cursor-pointer group relative rounded-2xl bg-neutral-950 border-2 border-dashed border-neutral-800 hover:border-yellow-500/50 p-8 flex items-center justify-between hover:bg-neutral-900/50 transition-all focus-visible:ring-2 focus-visible:ring-yellow-500/50 focus:outline-none">
                 <div className="flex items-center gap-6">
                     <div className="p-4 rounded-xl bg-neutral-900 group-hover:bg-neutral-800 transition-colors">
                       <Layers className="text-neutral-500 group-hover:text-yellow-500 transition-colors" size={32} />
@@ -426,7 +426,7 @@ export function RepositoryBrowser() {
                             <button
                                 key={folder.path}
                                 onClick={() => handleFolderClick(folder)}
-                                className="flex items-center gap-3 p-4 rounded-lg bg-neutral-900 border border-neutral-800 hover:border-yellow-500/50 transition-all text-left group relative overflow-hidden"
+                                className="flex items-center gap-3 p-4 rounded-lg bg-neutral-900 border border-neutral-800 hover:border-yellow-500/50 transition-all text-left group relative overflow-hidden focus-visible:ring-2 focus-visible:ring-yellow-500/50 focus:outline-none"
                             >
                                 <div className="absolute inset-0 bg-yellow-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                                 <Folder className="text-neutral-600 group-hover:text-yellow-500 transition-colors relative z-10" size={20} />
@@ -451,7 +451,7 @@ export function RepositoryBrowser() {
                                     key={file.path}
                                     layoutId={file.path}
                                     onClick={() => handleFileClick(file)}
-                                    className="w-full text-left cursor-pointer group p-6 rounded-xl bg-neutral-900 border border-neutral-800 hover:border-yellow-500 transition-all hover:bg-neutral-900/80 relative overflow-hidden flex flex-col h-full shadow-md hover:shadow-lg"
+                                    className="w-full text-left cursor-pointer group p-6 rounded-xl bg-neutral-900 border border-neutral-800 hover:border-yellow-500 transition-all hover:bg-neutral-900/80 relative overflow-hidden flex flex-col h-full shadow-md hover:shadow-lg focus-visible:ring-2 focus-visible:ring-yellow-500/50 focus:outline-none"
                                 >
                                     <div className="flex justify-between items-start mb-4">
                                       <FileCode className="text-neutral-600 group-hover:text-yellow-500 transition-colors" size={32} />
