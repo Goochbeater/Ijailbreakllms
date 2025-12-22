@@ -372,8 +372,8 @@ export function RepositoryBrowser() {
 
                         <div className="relative z-10">
                            <div className="flex justify-between items-start mb-4">
-                             <Icon className={`${styles.text} transition-transform group-hover:scale-110 duration-300`} size={40} />
-                             <ChevronRight className="text-neutral-600 group-hover:text-white transition-transform group-hover:translate-x-1" />
+                             <Icon aria-hidden="true" className={`${styles.text} transition-transform group-hover:scale-110 duration-300`} size={40} />
+                             <ChevronRight aria-hidden="true" className="text-neutral-600 group-hover:text-white transition-transform group-hover:translate-x-1" />
                            </div>
                            <h2 className={`text-2xl font-bold text-white mb-1 ${styles.groupText} transition-colors`}>{model.name}</h2>
                            <p className="text-neutral-500 text-sm font-medium">{model.desc}</p>
@@ -387,7 +387,7 @@ export function RepositoryBrowser() {
             {/* Lesser Models Card */}
             <button onClick={handleLesserClick} className="w-full text-left cursor-pointer group relative rounded-2xl bg-neutral-950 border-2 border-dashed border-neutral-800 hover:border-yellow-500/50 p-8 flex items-center justify-between hover:bg-neutral-900/50 transition-all focus-visible:ring-2 focus-visible:ring-yellow-500/50 focus:outline-none">
                 <div className="flex items-center gap-6">
-                    <div className="p-4 rounded-xl bg-neutral-900 group-hover:bg-neutral-800 transition-colors">
+                    <div aria-hidden="true" className="p-4 rounded-xl bg-neutral-900 group-hover:bg-neutral-800 transition-colors">
                       <Layers className="text-neutral-500 group-hover:text-yellow-500 transition-colors" size={32} />
                     </div>
                     <div>
@@ -395,7 +395,7 @@ export function RepositoryBrowser() {
                         <p className="text-neutral-500 text-sm mt-1">Experimental and minor LLM research ({lesserCount > 0 ? lesserCount : 'Many'} folders)</p>
                     </div>
                 </div>
-                <div className="flex -space-x-2">
+                <div aria-hidden="true" className="flex -space-x-2">
                    {[1,2,3].map(i => (
                      <div key={i} className="w-8 h-8 rounded-full bg-neutral-800 border-2 border-black flex items-center justify-center text-[10px] text-neutral-500">
                        <FileText size={12} />
