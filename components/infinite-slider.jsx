@@ -13,6 +13,7 @@ export function InfiniteSlider({
   const ref = useRef(null);
   const [containerWidth, setContainerWidth] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
   const baseX = useMotionValue(0);
   const x = useTransform(baseX, (value) => `${value}px`);
 
@@ -34,7 +35,8 @@ export function InfiniteSlider({
 
   useAnimationFrame((time) => {
     if (!ref.current || !containerWidth) return;
-    const currentSpeed = isHovered ? speedOnHover : speed;
+    const shouldPause = isHovered || isFocused;
+    const currentSpeed = shouldPause ? speedOnHover : speed;
     const moveBy = (time * currentSpeed) * 0.01;
     const position = moveBy % contentWidth;
     baseX.set(-position);
@@ -43,10 +45,15 @@ export function InfiniteSlider({
   return (
     <div
       ref={ref}
-      className="relative w-full overflow-hidden flex items-center"
+      tabIndex={0}
+      role="region"
+      aria-label="Partner brands slider"
+      className="relative w-full overflow-hidden flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500 rounded-lg"
       style={{ minHeight: '2rem', maxWidth: '100vw' }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onFocus={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
     >
       <motion.div
         className="flex flex-nowrap"
@@ -56,10 +63,10 @@ export function InfiniteSlider({
           <div key={index} className="shrink-0" style={{ paddingLeft: index === 0 ? 0 : `${gap}px` }}>{item}</div>
         ))}
         {items.map((item, index) => (
-          <div key={`dup1-${index}`} className="shrink-0" style={{ paddingLeft: `${gap}px` }}>{item}</div>
+          <div key={`dup1-${index}`} aria-hidden="true" className="shrink-0" style={{ paddingLeft: `${gap}px` }}>{item}</div>
         ))}
         {items.map((item, index) => (
-          <div key={`dup2-${index}`} className="shrink-0" style={{ paddingLeft: `${gap}px` }}>{item}</div>
+          <div key={`dup2-${index}`} aria-hidden="true" className="shrink-0" style={{ paddingLeft: `${gap}px` }}>{item}</div>
         ))}
       </motion.div>
     </div>
