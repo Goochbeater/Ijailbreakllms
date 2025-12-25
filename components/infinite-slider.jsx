@@ -17,15 +17,16 @@ export function InfiniteSlider({
   const x = useTransform(baseX, (value) => `${value}px`);
 
   useEffect(() => {
-    if (!ref.current) return;
+    const element = ref.current;
+    if (!element) return;
     const updateContainerWidth = () => {
-      if (ref.current) setContainerWidth(ref.current.offsetWidth);
+      if (element) setContainerWidth(element.offsetWidth);
     };
     const resizeObserver = new ResizeObserver(updateContainerWidth);
-    resizeObserver.observe(ref.current);
+    resizeObserver.observe(element);
     updateContainerWidth();
     return () => {
-      if (ref.current) resizeObserver.unobserve(ref.current);
+      if (element) resizeObserver.unobserve(element);
     };
   }, []);
 

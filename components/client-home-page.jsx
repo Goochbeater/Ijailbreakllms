@@ -22,25 +22,25 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
   };
 
   const sliderImages = [
-    "https://i.imgur.com/2UdcRcx.jpeg",
-    "https://i.imgur.com/ssZMv8L.jpeg",
-    "https://i.imgur.com/ZZc3TMh.jpeg",
-    "https://i.imgur.com/tCm38XL.jpeg",
-    "https://i.imgur.com/IWeytLJ.jpeg",
-    "https://i.imgur.com/M8YGR1R.jpeg",
-    "https://i.imgur.com/T8QMOQj.jpeg",
-    "https://i.imgur.com/U3qLzVB.jpeg",
-    "https://i.imgur.com/jyoZSMq.jpeg",
-    "https://i.imgur.com/oQ9b36D.jpeg",
-    "https://i.imgur.com/FJj6ZRd.jpeg",
+    { url: "https://i.imgur.com/2UdcRcx.jpeg", alt: "Anthropic" },
+    { url: "https://i.imgur.com/ssZMv8L.jpeg", alt: "ChatGPT" },
+    { url: "https://i.imgur.com/ZZc3TMh.jpeg", alt: "Gemini" },
+    { url: "https://i.imgur.com/tCm38XL.jpeg", alt: "Mistral AI" },
+    { url: "https://i.imgur.com/IWeytLJ.jpeg", alt: "DeepMind" },
+    { url: "https://i.imgur.com/M8YGR1R.jpeg", alt: "Meta" },
+    { url: "https://i.imgur.com/T8QMOQj.jpeg", alt: "Perplexity" },
+    { url: "https://i.imgur.com/U3qLzVB.jpeg", alt: "Cohere" },
+    { url: "https://i.imgur.com/jyoZSMq.jpeg", alt: "Hugging Face" },
+    { url: "https://i.imgur.com/oQ9b36D.jpeg", alt: "Nvidia" },
+    { url: "https://i.imgur.com/FJj6ZRd.jpeg", alt: "Stability AI" },
   ];
 
-  const imageElements = sliderImages.map((url, index) => (
-    <div key={`${url}-${index}`} className="flex items-center justify-center shrink-0">
+  const imageElements = sliderImages.map((img, index) => (
+    <div key={`${img.url}-${index}`} className="flex items-center justify-center shrink-0">
       <img
         className="h-8 w-auto sm:h-10 md:h-12 lg:h-16 object-contain rounded opacity-90 hover:opacity-100 transition-opacity"
-        src={url}
-        alt={`Slider image ${index + 1}`}
+        src={img.url}
+        alt={img.alt}
       />
     </div>
   ));
@@ -137,7 +137,7 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
             <Infinity size={80} className="text-yellow-500 animate-bounce" strokeWidth={1.5} />
           </div>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 bg-gradient-to-r from-white via-yellow-200 to-yellow-500 bg-clip-text text-transparent leading-tight">
-            Jailbreak LLMs with Spiritual Spell (Vichaps)
+            JailbreakLLMs with Spiritual Spell (Vichaps)
           </h1>
           <p className={`text-lg md:text-xl ${isDark ? 'text-neutral-400' : 'text-neutral-600'} max-w-2xl mx-auto`}>
             Exploring the boundaries of AI through creative prompt engineering
