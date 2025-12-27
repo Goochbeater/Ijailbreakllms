@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, createContext, useContext } from 'react';
+import { BackToTop } from '@/components/back-to-top';
 import './globals.css';
 
 // Theme context for dark/light mode
@@ -30,6 +31,7 @@ function ThemeProvider({ children }) {
   return (
     <ThemeContext.Provider value={{ isDark, setIsDark, toggle: () => setIsDark(!isDark) }}>
       {children}
+      <BackToTop />
     </ThemeContext.Provider>
   );
 }
