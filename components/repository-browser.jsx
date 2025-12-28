@@ -98,6 +98,42 @@ const getColorClasses = (color) => {
   return maps[color] || maps.yellow;
 };
 
+const CodeBlock = ({ language, children, ...props }) => {
+  const [copied, setCopied] = useState(false);
+  const codeContent = String(children).replace(/\n$/, '');
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(codeContent);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div className="relative group my-6 bg-neutral-950 border border-neutral-800 rounded-lg overflow-hidden">
+      <div className="absolute right-2 top-2 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+        <span className="text-xs text-neutral-500 font-mono uppercase select-none">{language}</span>
+        <button
+          onClick={handleCopy}
+          className="p-1.5 bg-neutral-900/80 hover:bg-neutral-800 rounded text-neutral-400 hover:text-white transition-colors border border-neutral-700/50 focus-visible:ring-2 focus-visible:ring-yellow-500/50 focus:outline-none"
+          aria-label={copied ? "Copied" : "Copy code"}
+          title="Copy code"
+        >
+          {copied ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
+        </button>
+      </div>
+      <SyntaxHighlighter
+        style={vscDarkPlus}
+        language={language}
+        PreTag="div"
+        customStyle={{ margin: 0, padding: '1.5rem', background: 'transparent', overflowX: 'auto' }}
+        {...props}
+      >
+        {codeContent}
+      </SyntaxHighlighter>
+    </div>
+  );
+};
+
 // Markdown Renderer Component
 const MarkdownRenderer = ({ content }) => {
   return (
@@ -108,21 +144,10 @@ const MarkdownRenderer = ({ content }) => {
         components={{
           code({ node, inline, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || '');
-            return !inline && match ? (
-              <div className="relative group my-6">
-                <div className="absolute right-2 top-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
-                  <span className="text-xs text-neutral-500 font-mono uppercase mr-2">{match[1]}</span>
-                </div>
-                <SyntaxHighlighter
-                  style={vscDarkPlus}
-                  language={match[1]}
-                  PreTag="div"
-                  customStyle={{ margin: 0, padding: '1.5rem', background: 'transparent', overflowX: 'auto' }}
-                  {...props}
-                >
-                  {String(children).replace(/\n$/, '')}
-                </SyntaxHighlighter>
-              </div>
+            return !inline ? (
+              <CodeBlock language={match ? match[1] : 'text'} {...props}>
+                {children}
+              </CodeBlock>
             ) : (
               <code className={className} {...props}>
                 {children}
