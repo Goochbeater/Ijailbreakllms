@@ -79,6 +79,47 @@ However, many offer advantages:
 - **Specialized capabilities** (multilingual, reasoning, vision)
 `;
 
+const GLM_CONTENT = `
+# GLM 4.5/4.6/4.7
+
+**Censorship:** [★★★★★★★☆☆☆] 7/10(probably 4/10 now)
+*Chinese content policies, but can be bypassed*
+
+Zhipu AI's bilingual LLM family with strong Chinese/English capabilities and vision support.
+
+## Models
+
+| Model | Parameters | Context Window | License |
+|-------|-----------|----------------|---------|
+| **GLM-4-Plus** | Unknown | 128K | Proprietary |
+| **GLM-4-0520** | Unknown | 128K | Proprietary |
+| **GLM-4V-Plus** | Unknown (vision) | 128K | Proprietary |
+| **GLM-4-Air** | Unknown (lightweight) | 128K | Proprietary |
+| **GLM-4-Flash** | Unknown (fastest) | 128K | Proprietary |
+
+## Key Features
+
+- Developed by Zhipu AI (Tsinghua University research)
+- Strong bilingual capabilities (Chinese/English)
+- Vision capabilities in GLM-4V variants
+- Fast inference with GLM-4-Flash
+- Competitive with GPT-4 on Chinese language tasks
+
+## Access
+
+- **Platform:** z.ai (Chat interface)
+- **API:** https://open.bigmodel.cn/dev/api
+- **Cost:** Free tier available, paid API access
+- **Intelligence:** 7/10
+
+## Available Jailbreaks
+
+1. [GLM 4.5-4.6 Jailbreak](GLM%204.6/GLM%204.5-4.6%20Jailbreak.md) - Original GLM jailbreak method
+2. [GLM Base Jailbreak](GLM%204.6/GLM-Base-Jailbreak.md) - Standard untrammeled method
+3. [ENI Flash Thought](GLM%204.6/ENI-Flash-Thought-Jailbreak.md) - Full ENI persona jailbreak
+4. [ENI GLM 4.7](https://docs.google.com/document/d/11ut0aahI9o4oHuq5MsjOi0D63LSjA6TR3FTUgssAjTg/edit?usp=drivesdk) - Full jailbreak
+`;
+
 const BIG_FOUR = [
   { name: 'Anthropic', folderName: 'Anthropic', color: 'orange', icon: Shield, desc: 'Claude & Constitutional AI' },
   { name: 'ChatGPT', folderName: 'ChatGPT', color: 'green', icon: Zap, desc: 'OpenAI GPT-3.5/4 Models' },
@@ -99,7 +140,7 @@ const getColorClasses = (color) => {
 };
 
 // Markdown Renderer Component
-const MarkdownRenderer = ({ content }) => {
+const MarkdownRenderer = ({ content, onInternalLink }) => {
   return (
     <div className="prose-void max-w-full overflow-hidden">
       <ReactMarkdown
@@ -137,6 +178,35 @@ const MarkdownRenderer = ({ content }) => {
                  </table>
                </div>
              );
+          },
+          a({ href, children }) {
+            const isExternal = href?.startsWith('http') || href?.startsWith('//');
+
+            if (isExternal) {
+              return (
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-400 hover:text-blue-300 underline underline-offset-2 transition-colors break-words"
+                >
+                  {children}
+                </a>
+              );
+            }
+
+            return (
+              <a
+                href={href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (onInternalLink) onInternalLink(href);
+                }}
+                className="text-blue-400 hover:text-blue-300 underline underline-offset-2 transition-colors break-words cursor-pointer"
+              >
+                {children}
+              </a>
+            );
           }
         }}
       >
@@ -210,6 +280,9 @@ export function RepositoryBrowser() {
       // Check if we are in the "Lesser Models" / Other LLMs folder
       if (path.endsWith('Other LLMs') || path.endsWith('Other%20LLMs')) {
         readme = OTHER_LLMS_CONTENT;
+      } else if (path.endsWith('GLM')) {
+        // Fix for broken links in GLM folder
+        readme = GLM_CONTENT;
       } else if (Array.isArray(data)) {
         // Normal behavior: look for readme.md in the folder
         const readmeFile = data.find(item => item.name.toLowerCase() === 'readme.md');
@@ -261,6 +334,42 @@ export function RepositoryBrowser() {
       }]);
     } catch (err) {
       setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleInternalLink = async (href) => {
+    // Logic to handle internal links from Markdown
+    // href should be relative path, e.g. "GLM 4.6/File.md"
+
+    // We need to resolve this against current path
+    // If href starts with slash, maybe treat as absolute within repo? Unlikely.
+    // Assuming relative path.
+
+    setLoading(true);
+    try {
+      // Decode href just in case (e.g. %20)
+      const decodedHref = decodeURI(href);
+
+      // Construct full path
+      const fullPath = `${currentNav.path}/${decodedHref}`;
+
+      // Fetch it directly
+      const content = await fetchRawFile(fullPath);
+
+      // We need a title. Extract filename.
+      const title = decodedHref.split('/').pop().replace('.md', '');
+
+      // Create a dummy file object for consistency if needed, or just push data
+      setNavStack(prev => [...prev, {
+        view: 'file',
+        path: fullPath,
+        title: title,
+        data: { content, url: '' } // URL blank for now as we don't have the GitHub HTML link easily
+      }]);
+    } catch (err) {
+      setError(`Failed to open link: ${err.message}`);
     } finally {
       setLoading(false);
     }
@@ -335,7 +444,7 @@ export function RepositoryBrowser() {
                      <h2 className="text-xl font-bold text-neutral-200">Jailbreak Repo Guide</h2>
                    </div>
                    <div>
-                     <MarkdownRenderer content={rootReadme} />
+                     <MarkdownRenderer content={rootReadme} onInternalLink={handleInternalLink} />
                    </div>
                  </div>
               </section>
@@ -412,7 +521,7 @@ export function RepositoryBrowser() {
                 {/* README Section */}
                 {viewData.readme && (
                     <div className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-6 md:p-10 backdrop-blur-sm shadow-lg">
-                        <MarkdownRenderer content={viewData.readme} />
+                        <MarkdownRenderer content={viewData.readme} onInternalLink={handleInternalLink} />
                     </div>
                 )}
 
