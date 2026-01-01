@@ -296,6 +296,11 @@ export function RepositoryBrowser() {
     }
   };
 
+  const navigateToBreadcrumb = (index) => {
+    if (index === navStack.length - 1) return;
+    setNavStack(prev => prev.slice(0, index + 1));
+  };
+
   const copyToClipboard = () => {
     if (currentNav.data?.content) {
       navigator.clipboard.writeText(currentNav.data.content);
@@ -317,19 +322,41 @@ export function RepositoryBrowser() {
       <main id="main-content" className="pt-28 pb-20 px-4 md:px-6 max-w-7xl mx-auto w-full">
 
         {/* Header / Breadcrumbs */}
-        <div className="mb-8 flex items-center gap-4">
-          {navStack.length > 1 && (
-            <button
-                onClick={goBack}
-                className="p-2 rounded-full hover:bg-neutral-800 text-yellow-500 transition-colors group"
-                aria-label="Go back"
-            >
-                <ArrowLeft size={24} className="group-hover:-translate-x-1 transition-transform" />
-            </button>
-          )}
-          <h1 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600 truncate">
-            {currentNav.title}
-          </h1>
+        <div className="mb-8 flex flex-col gap-2">
+          {/* Breadcrumb Trail */}
+          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm text-neutral-500 mb-2">
+            {navStack.map((item, index) => (
+              <div key={index} className="flex items-center gap-2">
+                {index > 0 && <ChevronRight size={12} className="text-neutral-600" aria-hidden="true" />}
+                <button
+                  onClick={() => navigateToBreadcrumb(index)}
+                  disabled={index === navStack.length - 1}
+                  className={`
+                    hover:text-yellow-500 transition-colors
+                    ${index === navStack.length - 1 ? 'text-neutral-300 font-semibold cursor-default' : 'cursor-pointer hover:underline'}
+                  `}
+                  aria-current={index === navStack.length - 1 ? 'page' : undefined}
+                >
+                  {item.view === 'root' ? 'Home' : item.title}
+                </button>
+              </div>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-4">
+            {navStack.length > 1 && (
+              <button
+                  onClick={goBack}
+                  className="p-2 rounded-full hover:bg-neutral-800 text-yellow-500 transition-colors group"
+                  aria-label="Go back"
+              >
+                  <ArrowLeft size={24} className="group-hover:-translate-x-1 transition-transform" />
+              </button>
+            )}
+            <h1 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600 truncate">
+              {currentNav.title}
+            </h1>
+          </div>
         </div>
 
         {error && (
