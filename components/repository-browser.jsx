@@ -310,13 +310,46 @@ export function RepositoryBrowser() {
       !item.name.startsWith('.')
   ).length;
 
+  // Jump to specific level in breadcrumb
+  const jumpToLevel = (index) => {
+    setNavStack(prev => prev.slice(0, index + 1));
+  };
+
   return (
     <div className={`min-h-screen ${isDark ? 'bg-black text-white' : 'bg-white text-black'} transition-colors duration-300 font-sans overflow-x-hidden`}>
       <PageNav backUrl="/" backText="Home" />
 
       <main id="main-content" className="pt-28 pb-20 px-4 md:px-6 max-w-7xl mx-auto w-full">
 
-        {/* Header / Breadcrumbs */}
+        {/* Breadcrumbs */}
+        <nav aria-label="Breadcrumb" className="mb-6">
+          <ol className="flex flex-wrap items-center gap-2 text-sm">
+             {navStack.map((item, index) => {
+               const isLast = index === navStack.length - 1;
+               return (
+                 <li key={index} className="flex items-center gap-2">
+                   {index > 0 && <ChevronRight size={14} className="text-neutral-600" aria-hidden="true" />}
+                   <button
+                     onClick={() => !isLast && jumpToLevel(index)}
+                     className={`
+                       flex items-center gap-2 transition-colors
+                       ${isLast
+                         ? 'font-bold text-yellow-500 cursor-default pointer-events-none'
+                         : isDark ? 'text-neutral-500 hover:text-white' : 'text-neutral-600 hover:text-black'}
+                     `}
+                     aria-current={isLast ? 'page' : undefined}
+                     disabled={isLast}
+                   >
+                     {index === 0 && <Box size={14} />}
+                     {item.title}
+                   </button>
+                 </li>
+               );
+             })}
+          </ol>
+        </nav>
+
+        {/* Header */}
         <div className="mb-8 flex items-center gap-4">
           {navStack.length > 1 && (
             <button
