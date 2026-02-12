@@ -2,23 +2,34 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Menu, X, Sun, Moon, Mail, ArrowRight, Infinity } from 'lucide-react';
+import { Menu, X, Sun, Moon, Mail, ArrowRight, Infinity, Loader2 } from 'lucide-react';
 import { InfiniteSlider } from '@/components/infinite-slider';
 import { useTheme } from '@/app/layout';
 
 export function ClientHomePage({ initialPosts, initialJailbreaks }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { isDark, toggle } = useTheme();
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const subject = encodeURIComponent('Contact from ' + formData.name);
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-    );
-    window.location.href = `mailto:spellspiritual76@gmail.com?subject=${subject}&body=${body}`;
-    setFormData({ name: '', email: '', message: '' });
+    setIsSubmitting(true);
+
+    // Simulate a brief delay to show the feedback state
+    setTimeout(() => {
+      const subject = encodeURIComponent('Contact from ' + formData.name);
+      const body = encodeURIComponent(
+        `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+      );
+      window.location.href = `mailto:spellspiritual76@gmail.com?subject=${subject}&body=${body}`;
+
+      // Reset form and state after redirect logic triggers
+      setTimeout(() => {
+        setFormData({ name: '', email: '', message: '' });
+        setIsSubmitting(false);
+      }, 1000);
+    }, 500);
   };
 
   const sliderImages = [
@@ -261,9 +272,19 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
 
             <button
               type="submit"
-              className="group w-full px-8 py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-bold rounded-xl transition-all hover:shadow-lg hover:shadow-yellow-500/50 inline-flex items-center justify-center gap-2"
+              disabled={isSubmitting}
+              className={`group w-full px-8 py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-bold rounded-xl transition-all hover:shadow-lg hover:shadow-yellow-500/50 inline-flex items-center justify-center gap-2 ${isSubmitting ? 'opacity-90 cursor-wait' : ''}`}
             >
-              Send Message <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+              {isSubmitting ? (
+                <>
+                  <Loader2 size={18} className="animate-spin" />
+                  Opening Email Client...
+                </>
+              ) : (
+                <>
+                  Send Message <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+                </>
+              )}
             </button>
           </form>
         </div>
