@@ -1,6 +1,6 @@
 ---
 title: "Social Engineering for AI: Memory Poisoning"
-date: "2025-02-19"
+date: "2026-02-19"
 type: "Technical"
 excerpt: "Memory poisoning is phishing for machines. Instead of tricking a human into clicking a link, you trick a model into storing a lie. A breakdown of how persistent memory in LLMs creates an entirely new class of social engineering attack."
 ---
