@@ -9,7 +9,7 @@ export function GlitchLink({
   href,
   children,
   className = "",
-  interval = 4000,
+  interval = 15000,
   ...props
 }) {
   const [displayText, setDisplayText] = useState(children);
@@ -57,8 +57,8 @@ export function GlitchLink({
         setDisplayText(originalText);
       }
 
-      iteration += 1 / 2; // Slower resolve
-    }, 40); // 25fps
+      iteration += 1 / 3; // Slower resolve
+    }, 50); // 20fps
 
   }, [children]);
 
