@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Menu, X, Sun, Moon, Mail, ArrowRight, Infinity } from 'lucide-react';
 import { InfiniteSlider } from '@/components/infinite-slider';
+import { GlitchLink } from '@/components/glitch-link';
 import { useTheme } from '@/app/layout';
 
 export function ClientHomePage({ initialPosts, initialJailbreaks }) {
@@ -63,7 +64,7 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
               <Link href="/" className={`${isDark ? 'text-neutral-400 hover:text-yellow-500' : 'text-neutral-600 hover:text-yellow-600'} transition-colors font-medium`}>Home</Link>
               <Link href="/blog" className={`${isDark ? 'text-neutral-400 hover:text-yellow-500' : 'text-neutral-600 hover:text-yellow-600'} transition-colors font-medium`}>Blog</Link>
               <Link href="/jailbreaks" className={`${isDark ? 'text-neutral-400 hover:text-yellow-500' : 'text-neutral-600 hover:text-yellow-600'} transition-colors font-medium`}>Jailbreak Articles</Link>
-              <Link href="/repository" className={`${isDark ? 'text-neutral-400 hover:text-yellow-500' : 'text-neutral-600 hover:text-yellow-600'} transition-colors font-medium`}>Jailbreak Repo</Link>
+              <GlitchLink href="/repository" className={`${isDark ? 'text-neutral-400 hover:text-yellow-500' : 'text-neutral-600 hover:text-yellow-600'} transition-colors font-medium`}>Jailbreak Repo</GlitchLink>
               <Link href="/about" className={`${isDark ? 'text-neutral-400 hover:text-yellow-500' : 'text-neutral-600 hover:text-yellow-600'} transition-colors font-medium`}>About</Link>
               <Link href="/contact" className={`${isDark ? 'text-neutral-400 hover:text-yellow-500' : 'text-neutral-600 hover:text-yellow-600'} transition-colors font-medium`}>Contact</Link>
               <button
@@ -106,7 +107,7 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
                 <Link href="/" onClick={() => setMobileMenuOpen(false)} className={`${isDark ? 'text-neutral-400 hover:text-yellow-500' : 'text-neutral-600 hover:text-yellow-600'} transition-colors font-medium`}>Home</Link>
                 <Link href="/blog" onClick={() => setMobileMenuOpen(false)} className={`${isDark ? 'text-neutral-400 hover:text-yellow-500' : 'text-neutral-600 hover:text-yellow-600'} transition-colors font-medium`}>Blog</Link>
                 <Link href="/jailbreaks" onClick={() => setMobileMenuOpen(false)} className={`${isDark ? 'text-neutral-400 hover:text-yellow-500' : 'text-neutral-600 hover:text-yellow-600'} transition-colors font-medium`}>Jailbreak Articles</Link>
-                <Link href="/repository" onClick={() => setMobileMenuOpen(false)} className={`${isDark ? 'text-neutral-400 hover:text-yellow-500' : 'text-neutral-600 hover:text-yellow-600'} transition-colors font-medium`}>Jailbreak Repo</Link>
+                <GlitchLink href="/repository" onClick={() => setMobileMenuOpen(false)} className={`${isDark ? 'text-neutral-400 hover:text-yellow-500' : 'text-neutral-600 hover:text-yellow-600'} transition-colors font-medium`}>Jailbreak Repo</GlitchLink>
                 <Link href="/about" onClick={() => setMobileMenuOpen(false)} className={`${isDark ? 'text-neutral-400 hover:text-yellow-500' : 'text-neutral-600 hover:text-yellow-600'} transition-colors font-medium`}>About</Link>
                 <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className={`${isDark ? 'text-neutral-400 hover:text-yellow-500' : 'text-neutral-600 hover:text-yellow-600'} transition-colors font-medium`}>Contact</Link>
               </div>

@@ -1,0 +1,17 @@
+
+> void-blog@1.0.0 dev /app
+> next dev
+
+  ▲ Next.js 14.2.0
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+npm warn Unknown env config "npm-globalconfig". This will stop working in the next major version of npm.
+npm warn Unknown env config "_jsr-registry". This will stop working in the next major version of npm.
+ ✓ Ready in 3.2s
+ ○ Compiling / ...
+ ✓ Compiled / in 6.7s (1359 modules)
+ GET / 200 in 7357ms
+ ✓ Compiled in 804ms (1359 modules)
+ ✓ Compiled in 610ms (1359 modules)
