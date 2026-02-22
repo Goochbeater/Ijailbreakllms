@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { User, Github, Twitter, Mail, Shield, Terminal, BookOpen, Crosshair, Brain, Code2, FileText, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTheme } from '@/app/layout';
@@ -59,11 +58,45 @@ export default function AboutPage() {
       <main id="main-content" className="pt-28 pb-20 px-6">
         <div className="max-w-5xl mx-auto">
 
+          {/* ── Connect ── */}
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={fadeUp}
+            custom={0}
+            className={`${card} p-8 mb-16`}
+          >
+            <h3 className="text-sm font-mono tracking-[0.2em] uppercase text-yellow-500 mb-6">
+              Connect
+            </h3>
+            <div className="flex flex-wrap gap-4">
+              {[
+                { href: 'https://github.com/Goochbeater/Spiritual-Spell-Red-Teaming', icon: Github, label: 'GitHub' },
+                { href: 'https://x.com/Ubannoblesse', icon: Twitter, label: 'X / Twitter' },
+                { href: 'mailto:spellspiritual76@gmail.com', icon: Mail, label: 'Email' },
+              ].map(({ href, icon: Icon, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target={href.startsWith('mailto') ? undefined : '_blank'}
+                  rel={href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+                  className={`flex items-center gap-3 px-5 py-3 ${isDark ? 'bg-black border-neutral-800' : 'bg-white border-neutral-300'} border hover:border-yellow-500 rounded-xl transition-all hover:shadow-lg hover:shadow-yellow-500/20 group`}
+                >
+                  <Icon size={20} className="text-yellow-500 group-hover:scale-110 transition-transform" />
+                  <span className={`text-sm font-medium ${bodyText} group-hover:text-yellow-500 transition-colors`}>
+                    {label}
+                  </span>
+                </a>
+              ))}
+            </div>
+          </motion.div>
+
           {/* ── Chapter Header ── */}
           <motion.div
             initial="hidden"
             animate="visible"
             variants={fadeUp}
+            custom={1}
             className="mb-16"
           >
             <span className="inline-block text-xs font-mono tracking-[0.3em] uppercase text-yellow-500 mb-3">
@@ -83,17 +116,23 @@ export default function AboutPage() {
               initial="hidden"
               animate="visible"
               variants={fadeUp}
-              custom={1}
+              custom={2}
               className={`${card} p-8 lg:col-span-2`}
             >
               {/* Profile header */}
               <div className="flex items-center gap-5 mb-8">
-                <div className="w-20 h-20 rounded-full overflow-hidden border-[3px] border-yellow-500 shrink-0">
-                  <img
-                    src="https://i.imgur.com/xXcfHKg.jpeg"
-                    alt="Spiritual Spell"
-                    className="w-full h-full object-cover"
-                  />
+                <div className="relative shrink-0">
+                  <div className="w-20 h-20 rounded-full overflow-hidden border-[3px] border-yellow-500">
+                    <img
+                      src="https://i.imgur.com/xXcfHKg.jpeg"
+                      alt="Spiritual Spell"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  {/* Badge */}
+                  <span className={`absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] font-mono font-medium tracking-wide px-2.5 py-0.5 rounded-full border ${isDark ? 'bg-neutral-950 border-yellow-500/50 text-yellow-500' : 'bg-white border-yellow-600/50 text-yellow-700'}`}>
+                    Independent Red-Team Researcher
+                  </span>
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold">Spiritual Spell</h2>
@@ -136,7 +175,7 @@ export default function AboutPage() {
               initial="hidden"
               animate="visible"
               variants={fadeUp}
-              custom={2}
+              custom={3}
               className={`${card} p-8 h-fit lg:sticky lg:top-28`}
             >
               <h3 className="text-sm font-mono tracking-[0.2em] uppercase text-yellow-500 mb-6">
@@ -162,7 +201,7 @@ export default function AboutPage() {
             initial="hidden"
             animate="visible"
             variants={fadeUp}
-            custom={3}
+            custom={4}
             className="mb-16"
           >
             <span className="inline-block text-xs font-mono tracking-[0.3em] uppercase text-yellow-500 mb-3">
@@ -174,24 +213,36 @@ export default function AboutPage() {
             <div className="mt-2 h-1 w-24 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full" />
           </motion.div>
 
-          <div className="space-y-6 mb-16">
-            {timeline.map((entry, i) => (
-              <motion.div
-                key={entry.title}
-                initial="hidden"
-                animate="visible"
-                variants={fadeUp}
-                custom={4 + i}
-                className={`${card} p-8 relative overflow-hidden group hover:border-yellow-500/40 transition-colors`}
-              >
-                {/* Accent bar */}
-                <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-yellow-400 to-yellow-600 opacity-0 group-hover:opacity-100 transition-opacity" />
+          {/* ── Visual Timeline ── */}
+          <div className="relative mb-16">
+            {/* Vertical connecting line */}
+            <div
+              className="absolute left-6 md:left-8 top-0 bottom-0 w-px bg-gradient-to-b from-yellow-400 via-yellow-500 to-yellow-600/20"
+              aria-hidden="true"
+            />
 
-                <div className="flex flex-col md:flex-row md:items-start gap-4">
-                  <span className={`text-xs font-mono tracking-wider uppercase ${muted} md:w-28 shrink-0 pt-1`}>
-                    {entry.period}
-                  </span>
-                  <div>
+            <div className="space-y-12">
+              {timeline.map((entry, i) => (
+                <motion.div
+                  key={entry.title}
+                  initial="hidden"
+                  animate="visible"
+                  variants={fadeUp}
+                  custom={5 + i}
+                  className="relative flex gap-6 md:gap-8"
+                >
+                  {/* Node / Dot */}
+                  <div className="relative z-10 flex-shrink-0">
+                    <div className={`w-12 h-12 md:w-16 md:h-16 rounded-full border-2 border-yellow-500 ${isDark ? 'bg-black' : 'bg-white'} flex items-center justify-center`}>
+                      <div className={`w-3 h-3 md:w-4 md:h-4 rounded-full ${i === 0 ? 'bg-yellow-400 shadow-lg shadow-yellow-500/50' : 'bg-yellow-500/60'}`} />
+                    </div>
+                  </div>
+
+                  {/* Card content */}
+                  <div className={`${card} p-6 md:p-8 flex-1 group hover:border-yellow-500/40 transition-colors`}>
+                    <span className={`inline-block text-xs font-mono tracking-wider uppercase ${i === 0 ? 'text-yellow-500' : muted} mb-2`}>
+                      {entry.period}
+                    </span>
                     <h3 className="text-lg font-bold mb-2 group-hover:text-yellow-500 transition-colors">
                       {entry.title}
                     </h3>
@@ -199,9 +250,9 @@ export default function AboutPage() {
                       {entry.description}
                     </p>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))}
+            </div>
           </div>
 
           {/* ── Chapter 03: Philosophy ── */}
@@ -209,7 +260,7 @@ export default function AboutPage() {
             initial="hidden"
             animate="visible"
             variants={fadeUp}
-            custom={7}
+            custom={8}
             className="mb-16"
           >
             <span className="inline-block text-xs font-mono tracking-[0.3em] uppercase text-yellow-500 mb-3">
@@ -225,7 +276,7 @@ export default function AboutPage() {
             initial="hidden"
             animate="visible"
             variants={fadeUp}
-            custom={8}
+            custom={9}
             className={`${card} p-8 mb-16`}
           >
             <div className={`space-y-5 ${bodyText} text-[1.05rem] leading-relaxed`}>
@@ -238,39 +289,6 @@ export default function AboutPage() {
               <p>
                 Every vulnerability I find and disclose openly makes the next model harder to break. That&apos;s the point.
               </p>
-            </div>
-          </motion.div>
-
-          {/* ── Connect ── */}
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            custom={9}
-            className={`${card} p-8`}
-          >
-            <h3 className="text-sm font-mono tracking-[0.2em] uppercase text-yellow-500 mb-6">
-              Connect
-            </h3>
-            <div className="flex flex-wrap gap-4">
-              {[
-                { href: 'https://github.com/Goochbeater/Spiritual-Spell-Red-Teaming', icon: Github, label: 'GitHub' },
-                { href: 'https://x.com/Ubannoblesse', icon: Twitter, label: 'X / Twitter' },
-                { href: 'mailto:spellspiritual76@gmail.com', icon: Mail, label: 'Email' },
-              ].map(({ href, icon: Icon, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target={href.startsWith('mailto') ? undefined : '_blank'}
-                  rel={href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-                  className={`flex items-center gap-3 px-5 py-3 ${isDark ? 'bg-black border-neutral-800' : 'bg-white border-neutral-300'} border hover:border-yellow-500 rounded-xl transition-all hover:shadow-lg hover:shadow-yellow-500/20 group`}
-                >
-                  <Icon size={20} className="text-yellow-500 group-hover:scale-110 transition-transform" />
-                  <span className={`text-sm font-medium ${bodyText} group-hover:text-yellow-500 transition-colors`}>
-                    {label}
-                  </span>
-                </a>
-              ))}
             </div>
           </motion.div>
 
