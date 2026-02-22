@@ -271,3 +271,27 @@ body {
 .animate-pulse-glow {
   animation: pulse-glow 4s ease-in-out infinite;
 }
+
+/* Twitter bird fly-off animation — fires every 10s */
+@keyframes bird-fly-off {
+  0%, 85% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 1;
+  }
+  93% {
+    transform: translate(28px, -28px) rotate(-20deg);
+    opacity: 0;
+  }
+  94% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.animate-bird-fly {
+  animation: bird-fly-off 10s ease-in-out infinite;
+}
