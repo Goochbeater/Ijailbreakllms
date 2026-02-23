@@ -1,22 +1,9 @@
 'use client';
 
-import { User, Github, Mail, Shield, Terminal, BookOpen, Crosshair, Brain, Code2, FileText, ChevronRight } from 'lucide-react';
+import { Shield, Terminal, Crosshair, Brain, Code2, FileText } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTheme } from '@/app/layout';
 import { PageNav } from '@/components/page-nav';
-
-/* ── Custom SVG Icons ── */
-const TwitterBird = ({ size = 20, className = '' }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
-    <path d="M23.643 4.937c-.835.37-1.732.62-2.675.733a4.67 4.67 0 0 0 2.048-2.578 9.3 9.3 0 0 1-2.958 1.13 4.66 4.66 0 0 0-7.938 4.25 13.229 13.229 0 0 1-9.602-4.868c-.4.69-.63 1.49-.63 2.342A4.66 4.66 0 0 0 5.96 9.824a4.647 4.647 0 0 1-2.11-.583v.06a4.66 4.66 0 0 0 3.737 4.568 4.692 4.692 0 0 1-2.104.08 4.661 4.661 0 0 0 4.352 3.234 9.348 9.348 0 0 1-5.786 1.995 9.5 9.5 0 0 1-1.112-.065 13.175 13.175 0 0 0 7.14 2.093c8.57 0 13.255-7.098 13.255-13.254 0-.2-.005-.402-.014-.602a9.47 9.47 0 0 0 2.323-2.41z" />
-  </svg>
-);
-
-const RedditIcon = ({ size = 20, className = '' }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
-    <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
-  </svg>
-);
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -70,42 +57,6 @@ export default function AboutPage() {
 
       <main id="main-content" className="pt-28 pb-20 px-6">
         <div className="max-w-5xl mx-auto">
-
-          {/* ── Connect ── */}
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            custom={0}
-            className={`${card} p-8 mb-16`}
-          >
-            <h3 className="text-sm font-mono tracking-[0.2em] uppercase text-yellow-500 mb-6">
-              Connect
-            </h3>
-            <div className="flex flex-wrap gap-4">
-              {[
-                { href: 'https://github.com/Goochbeater/Spiritual-Spell-Red-Teaming', icon: Github, label: 'GitHub' },
-                { href: 'https://x.com/Ubannoblesse', icon: TwitterBird, label: 'X / Twitter', animated: true },
-                { href: 'https://www.reddit.com/r/ClaudeAIJailbreak/', icon: RedditIcon, label: 'Reddit' },
-                { href: 'mailto:spellspiritual76@gmail.com', icon: Mail, label: 'Email' },
-              ].map(({ href, icon: Icon, label, animated }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target={href.startsWith('mailto') ? undefined : '_blank'}
-                  rel={href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-                  className={`flex items-center gap-3 px-5 py-3 ${isDark ? 'bg-black border-neutral-800' : 'bg-white border-neutral-300'} border hover:border-yellow-500 rounded-xl transition-all hover:shadow-lg hover:shadow-yellow-500/20 group`}
-                >
-                  <span className={animated ? 'inline-block animate-bird-fly' : ''}>
-                    <Icon size={20} className="text-yellow-500 group-hover:scale-110 transition-transform" />
-                  </span>
-                  <span className={`text-sm font-medium ${bodyText} group-hover:text-yellow-500 transition-colors`}>
-                    {label}
-                  </span>
-                </a>
-              ))}
-            </div>
-          </motion.div>
 
           {/* ── Chapter Header ── */}
           <motion.div
