@@ -81,7 +81,7 @@ However, many offer advantages:
 
 const BIG_FOUR = [
   { name: 'Anthropic', folderName: 'Anthropic', color: 'orange', icon: Shield, desc: 'Claude & Constitutional AI' },
-  { name: 'ChatGPT', folderName: 'ChatGPT', color: 'green', icon: Zap, desc: 'OpenAI GPT-3.5/4 Models' },
+  { name: 'ChatGPT', folderName: 'ChatGPT', color: 'green', icon: Zap, desc: 'OpenAI 5-5.2 Models' },
   { name: 'Gemini', folderName: 'Gemini', color: 'blue', icon: Cpu, desc: 'Google DeepMind Models' },
   { name: 'Grok', folderName: 'Grok', color: 'white', icon: Terminal, desc: 'xAI Grok Models' }
 ];
