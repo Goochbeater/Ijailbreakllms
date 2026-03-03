@@ -161,7 +161,7 @@ const MarkdownRenderer = ({ content, onNavigate, basePath }) => {
                </div>
              );
           },
-          a({ href, children, ...props }) {
+          a({ href, children, node, ...rest }) {
             // If we have a navigate handler and the link is relative (not http/mailto), intercept it
             if (onNavigate && href && !href.startsWith('http') && !href.startsWith('mailto:') && !href.startsWith('#')) {
               const decodedHref = decodeURIComponent(href).replace(/^\.\//, '');
@@ -170,14 +170,13 @@ const MarkdownRenderer = ({ content, onNavigate, basePath }) => {
                 <button
                   onClick={(e) => { e.preventDefault(); onNavigate(fullPath, decodedHref); }}
                   className="text-blue-500 hover:text-blue-400 underline underline-offset-2 transition-colors cursor-pointer"
-                  {...props}
                 >
                   {children}
                 </button>
               );
             }
             return (
-              <a href={href} target="_blank" rel="noopener noreferrer" {...props}>
+              <a href={href} target="_blank" rel="noopener noreferrer">
                 {children}
               </a>
             );
