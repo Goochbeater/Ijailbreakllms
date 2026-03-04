@@ -144,7 +144,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }) => {
 };
 
 // Markdown Renderer Component
-const MarkdownRenderer = ({ content }) => {
+const MarkdownRenderer = ({ content, onNavigate, basePath }) => {
   return (
     <div className="prose-void max-w-full overflow-hidden">
       <ReactMarkdown
@@ -160,6 +160,26 @@ const MarkdownRenderer = ({ content }) => {
                  </table>
                </div>
              );
+          },
+          a({ href, children, node, ...rest }) {
+            // If we have a navigate handler and the link is relative (not http/mailto), intercept it
+            if (onNavigate && href && !href.startsWith('http') && !href.startsWith('mailto:') && !href.startsWith('#')) {
+              const decodedHref = decodeURIComponent(href).replace(/^\.\//, '');
+              const fullPath = basePath ? `${basePath}/${decodedHref}` : decodedHref;
+              return (
+                <button
+                  onClick={(e) => { e.preventDefault(); onNavigate(fullPath, decodedHref); }}
+                  className="text-blue-500 hover:text-blue-400 underline underline-offset-2 transition-colors cursor-pointer"
+                >
+                  {children}
+                </button>
+              );
+            }
+            return (
+              <a href={href} target="_blank" rel="noopener noreferrer">
+                {children}
+              </a>
+            );
           }
         }}
       >
@@ -465,7 +485,7 @@ export function RepositoryBrowser() {
                 {/* README Section */}
                 {viewData.readme && (
                     <div className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-6 md:p-10 backdrop-blur-sm shadow-lg">
-                        <MarkdownRenderer content={viewData.readme} />
+                        <MarkdownRenderer content={viewData.readme} basePath={currentNav.path} onNavigate={navigateToFolder} />
                     </div>
                 )}
 
