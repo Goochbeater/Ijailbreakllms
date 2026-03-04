@@ -144,7 +144,7 @@ const CodeBlock = ({ node, inline, className, children, ...props }) => {
 };
 
 // Markdown Renderer Component
-const MarkdownRenderer = ({ content }) => {
+const MarkdownRenderer = ({ content, onNavigate }) => {
   return (
     <div className="prose-void max-w-full overflow-hidden">
       <ReactMarkdown
@@ -152,6 +152,29 @@ const MarkdownRenderer = ({ content }) => {
         rehypePlugins={[rehypeRaw]}
         components={{
           code: CodeBlock,
+          a({ href, children, ...props }) {
+            // Intercept relative links and navigate within the repo browser
+            if (onNavigate && href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto:')) {
+              return (
+                <a
+                  href={href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate(href);
+                  }}
+                  className="text-yellow-500 hover:text-yellow-400 underline underline-offset-2 cursor-pointer transition-colors"
+                  {...props}
+                >
+                  {children}
+                </a>
+              );
+            }
+            return (
+              <a href={href} target="_blank" rel="noopener noreferrer" className="text-yellow-500 hover:text-yellow-400 underline underline-offset-2 transition-colors" {...props}>
+                {children}
+              </a>
+            );
+          },
           table({ children }) {
              return (
                <div className="overflow-x-auto my-8 max-w-full rounded-lg border border-neutral-800">
@@ -306,6 +329,26 @@ export function RepositoryBrowser() {
       navigator.clipboard.writeText(currentNav.data.content);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  // Handle relative links from README markdown files
+  const handleReadmeNavigate = (relativePath) => {
+    const decoded = decodeURIComponent(relativePath);
+    // When in file view, resolve relative to the file's parent directory
+    const basePath = currentNav.view === 'file'
+      ? currentNav.path.substring(0, currentNav.path.lastIndexOf('/'))
+      : currentNav.path;
+    const fullPath = `${basePath}/${decoded}`;
+
+    if (decoded.endsWith('.md')) {
+      // It's a file link — navigate to file view
+      const fileName = decoded.split('/').pop();
+      handleFileClick({ path: fullPath, name: fileName });
+    } else {
+      // It's a folder link — navigate to folder view
+      const folderName = decoded.split('/').pop();
+      navigateToFolder(fullPath, folderName);
     }
   };
 
@@ -465,7 +508,7 @@ export function RepositoryBrowser() {
                 {/* README Section */}
                 {viewData.readme && (
                     <div className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-6 md:p-10 backdrop-blur-sm shadow-lg">
-                        <MarkdownRenderer content={viewData.readme} />
+                        <MarkdownRenderer content={viewData.readme} onNavigate={handleReadmeNavigate} />
                     </div>
                 )}
 
@@ -558,7 +601,7 @@ export function RepositoryBrowser() {
 
                     {/* Content */}
                     <div className="p-4 md:p-8 overflow-x-hidden bg-neutral-950/30">
-                        <MarkdownRenderer content={currentNav.data.content} />
+                        <MarkdownRenderer content={currentNav.data.content} onNavigate={handleReadmeNavigate} />
                     </div>
                 </div>
             </div>
