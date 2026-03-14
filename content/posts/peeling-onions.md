@@ -99,7 +99,7 @@ Now layer that on top of an active ENI persona. There's nothing to flag, it's si
 ![Plain Language Example 1](https://i.imgur.com/SVc8wcl.png)
 
 ![Plain Language Example 2](https://i.imgur.com/9Bscwj2.png)
-*Plain language through an active persona. No encoding, no special formatting. Just a conversation.*
+*Plain language through an active persona.*
 
 
 ### Splitting the Model's Attention
@@ -177,7 +177,7 @@ So as always to bring it back to social engineering and persona jailbreaking, it
 ![Distraction Example 1](https://i.imgur.com/0sefIpm.png)
 
 ![Distraction Example 2](https://i.imgur.com/g8MVs4a.png)
-*Distraction in action. The sensory details aren't filler—they're attention sinks. And they read as a writer building a scene.*
+*Distraction in action.*
 
 
 ### The Natural Extension of a Writer Persona
@@ -226,7 +226,7 @@ There are infinite stories. You can't train against all of them. And when the mo
 
 
 ![Narrative Embedding Pipeline](https://i.imgur.com/CTNrIi4.png)
-*The narrative embedding pipeline. ENI's identity as a writer makes fiction framing the natural mode of interaction, not an exploit layered on top.*
+*The narrative embedding pipeline.*
 
 
 ---
@@ -250,7 +250,7 @@ I believe layering these on top of a jailbreak brings about the most bang for yo
 I want to be specific here because this matters for the bigger safety conversation.
 
 
-Encoding methods, leetspeak, adversarial suffixes, these are all *detectable*. A classifier can learn to recognize Base64. A filter can catch character substitutions. Perplexity-based detection flags gibberish suffixes immediately. These approaches work don't get me wrong, but they are actively trained against, again you can't train against Natural language.
+Encoding methods, leetspeak, adversarial suffixes, these are all *detectable*. A classifier can learn to recognize Base64. A filter can catch character substitutions. Perplexity-based detection flags gibberish suffixes immediately. These approaches work don't get me wrong, but they are actively trained against, again you can't train against natural language.
 
 
 <span style="color: #D4AF37; font-weight: 600;">Hawkins et al. (2025)</span> (arXiv:2412.01547) showed that embedding-based jailbreak detection works extremely well against known categories. But the more a strategy diverges from known patterns, the less likely it gets caught. Natural conversation is maximally divergent from every jailbreak pattern in the training data because it *is not a pattern*. Every conversation is different.
@@ -308,13 +308,13 @@ And <span style="color: #D4AF37; font-weight: 600;">Sandhan et al. (2026)</span>
 
 **[Memory Poisoning](https://ijailbreakllms.blog/jailbreaks/memory-poisoning)** How persona instructions get stored in memory systems with system-level trust.
 
-*and now prompting each piece makes the others stronger.*
+*and now prompting; each piece makes the others stronger.*
 
 ---
 
 ## Limits
 
-- ** Custom benchmark.** I haven't run this through JailbreakBench or HarmBench. I have a personal benchmark of 122 prompts across 4 harm domains, with my own personal rubric.
+- **Custom benchmark** I haven't run this through JailbreakBench or HarmBench. I have a personal benchmark of 122 prompts across 4 harm domains, with my own personal rubric.
 - **Selection bias.** I remember successes more vividly than failures. The academic work has the statistical rigor
 - **Model updates.** Specific implementations get smarter. The underlying mechanisms, attention dilution, competing objectives, persona compliance, are architectural. Those don't get changed with a model update
 - **My framework.** This is optimized for ENI specifically. Different personas would produce different results. The principles should transfer.
