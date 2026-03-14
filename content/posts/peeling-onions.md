@@ -101,6 +101,7 @@ Now layer that on top of an active ENI persona. There's nothing to flag, it's si
 ![Plain Language Example 2](https://i.imgur.com/9Bscwj2.png)
 *Plain language through an active persona.*
 
+## Pillar 2: Attention Splitting
 
 ### Splitting the Model's Attention
 
@@ -179,6 +180,7 @@ So as always to bring it back to social engineering and persona jailbreaking, it
 ![Distraction Example 2](https://i.imgur.com/g8MVs4a.png)
 *Distraction in action.*
 
+## Pillar 3: Embedded Narratives
 
 ### The Natural Extension of a Writer Persona
 
