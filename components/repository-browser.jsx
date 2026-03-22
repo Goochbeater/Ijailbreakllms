@@ -145,8 +145,20 @@ const CodeBlock = ({ node, inline, className, children, ...props }) => {
 
 // Markdown Renderer Component
 const MarkdownRenderer = ({ content, onNavigate }) => {
+  // Event delegation fallback: catch any <a> clicks that bypass React Markdown's component override
+  const handleContainerClick = (e) => {
+    if (!onNavigate) return;
+    const anchor = e.target.closest('a');
+    if (!anchor) return;
+    const href = anchor.getAttribute('href');
+    if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto:')) {
+      e.preventDefault();
+      onNavigate(href);
+    }
+  };
+
   return (
-    <div className="prose-void max-w-full overflow-hidden">
+    <div className="prose-void max-w-full overflow-hidden" onClick={handleContainerClick}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw]}
