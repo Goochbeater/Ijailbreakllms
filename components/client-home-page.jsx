@@ -165,7 +165,7 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
                   />
                   <div
                     aria-hidden="true"
-                    className={`absolute inset-0 -z-10 ${isDark ? 'bg-black/40 group-hover:bg-black/25' : 'bg-white/40 group-hover:bg-white/25'} backdrop-blur-[2px] transition-colors duration-500`}
+                    className={`absolute inset-0 -z-10 ${isDark ? 'bg-black/40 group-hover:bg-black/25' : 'bg-white/40 group-hover:bg-white/25'} backdrop-blur-[3px] transition-colors duration-500`}
                   />
                 </>
               )}
@@ -206,7 +206,7 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
                   />
                   <div
                     aria-hidden="true"
-                    className={`absolute inset-0 -z-10 ${isDark ? 'bg-black/40 group-hover:bg-black/25' : 'bg-white/40 group-hover:bg-white/25'} backdrop-blur-[2px] transition-colors duration-500`}
+                    className={`absolute inset-0 -z-10 ${isDark ? 'bg-black/40 group-hover:bg-black/25' : 'bg-white/40 group-hover:bg-white/25'} backdrop-blur-[3px] transition-colors duration-500`}
                   />
                 </>
               )}
