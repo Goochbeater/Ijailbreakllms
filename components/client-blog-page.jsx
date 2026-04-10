@@ -27,26 +27,42 @@ export function ClientBlogPage({ posts }) {
                 <Link
                   key={post.slug}
                   href={`/blog/${post.slug}`}
-                  className={`group p-6 ${isDark ? 'bg-neutral-950 border-neutral-800' : 'bg-neutral-50 border-neutral-200'} border hover:border-yellow-500 rounded-xl transition-all hover:shadow-lg hover:shadow-yellow-500/20`}
+                  className={`group relative overflow-hidden isolate ${!post.coverImage ? (isDark ? 'bg-neutral-950' : 'bg-neutral-50') : ''} border ${isDark ? 'border-neutral-800 hover:border-yellow-500' : 'border-neutral-200 hover:border-yellow-600'} rounded-xl transition-all hover:shadow-lg hover:shadow-yellow-500/20`}
                 >
-                  <div className="flex items-center gap-2 mb-4">
-                    <span className="text-xs font-semibold text-yellow-500 uppercase tracking-wider">
-                      {post.type || 'Article'}
-                    </span>
-                    <span className="text-neutral-600">•</span>
-                    <span className="text-xs text-neutral-500">{post.readingTime} min read</span>
-                  </div>
-                  <h3 className="text-xl font-bold mb-2 group-hover:text-yellow-500 transition-colors">
-                    {post.title}
-                  </h3>
-                  {post.date && (
-                    <p className="text-sm text-neutral-500 mb-3">{post.date}</p>
+                  {post.coverImage && (
+                    <>
+                      <img
+                        src={post.coverImage}
+                        alt=""
+                        aria-hidden="true"
+                        className="absolute inset-0 -z-10 w-full h-full object-cover scale-100 group-hover:scale-110 transition-transform duration-700"
+                      />
+                      <div
+                        aria-hidden="true"
+                        className={`absolute inset-0 -z-10 ${isDark ? 'bg-black/60 group-hover:bg-black/40' : 'bg-white/60 group-hover:bg-white/40'} backdrop-blur-md transition-colors duration-500`}
+                      />
+                    </>
                   )}
-                  <p className="text-neutral-400 text-sm mb-4 line-clamp-3">
-                    {post.excerpt || post.content.substring(0, 120) + '...'}
-                  </p>
-                  <div className="flex items-center gap-2 text-yellow-500 text-sm font-semibold">
-                    Read more <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                  <div className="relative p-6">
+                    <div className="flex items-center gap-2 mb-4">
+                      <span className="text-xs font-semibold text-yellow-500 uppercase tracking-wider drop-shadow">
+                        {post.type || 'Article'}
+                      </span>
+                      <span className="text-neutral-400">•</span>
+                      <span className={`text-xs ${isDark ? 'text-neutral-300' : 'text-neutral-600'}`}>{post.readingTime} min read</span>
+                    </div>
+                    <h3 className={`text-xl font-bold mb-2 group-hover:text-yellow-500 transition-colors ${isDark ? 'text-white' : 'text-black'} drop-shadow`}>
+                      {post.title}
+                    </h3>
+                    {post.date && (
+                      <p className={`text-sm mb-3 ${isDark ? 'text-neutral-300' : 'text-neutral-600'}`}>{post.date}</p>
+                    )}
+                    <p className={`text-sm mb-4 line-clamp-3 ${isDark ? 'text-neutral-200' : 'text-neutral-700'}`}>
+                      {post.excerpt || post.content.substring(0, 120) + '...'}
+                    </p>
+                    <div className="flex items-center gap-2 text-yellow-500 text-sm font-semibold drop-shadow">
+                      Read more <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                    </div>
                   </div>
                 </Link>
               ))}

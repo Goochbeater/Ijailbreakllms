@@ -153,23 +153,39 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
           {latestPost && (
             <Link
               href={`/blog/${latestPost.slug}`}
-              className={`group p-8 ${isDark ? 'bg-neutral-950' : 'bg-neutral-50'} border ${isDark ? 'border-neutral-800 hover:border-yellow-500' : 'border-neutral-200 hover:border-yellow-600'} rounded-xl transition-all hover:shadow-lg ${isDark ? 'hover:shadow-yellow-500/20' : 'hover:shadow-yellow-600/20'}`}
+              className={`group relative overflow-hidden isolate ${!latestPost.coverImage ? (isDark ? 'bg-neutral-950' : 'bg-neutral-50') : ''} border ${isDark ? 'border-neutral-800 hover:border-yellow-500' : 'border-neutral-200 hover:border-yellow-600'} rounded-xl transition-all hover:shadow-lg ${isDark ? 'hover:shadow-yellow-500/20' : 'hover:shadow-yellow-600/20'}`}
             >
-              <div className="flex items-center gap-2 mb-4">
-                <span className="text-xs font-semibold text-yellow-500 uppercase tracking-wider">
-                  Latest Article
-                </span>
-                <span className="text-neutral-600">•</span>
-                <span className="text-xs text-neutral-500">{latestPost.readingTime} min read</span>
-              </div>
-              <h3 className="text-2xl font-bold mb-3 group-hover:text-yellow-500 transition-colors">
-                {latestPost.title}
-              </h3>
-              <p className={`${isDark ? 'text-neutral-400' : 'text-neutral-600'} mb-4 line-clamp-3`}>
-                {latestPost.excerpt || latestPost.content.substring(0, 150) + '...'}
-              </p>
-              <div className="flex items-center gap-2 text-yellow-500 font-semibold">
-                Read more <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+              {latestPost.coverImage && (
+                <>
+                  <img
+                    src={latestPost.coverImage}
+                    alt=""
+                    aria-hidden="true"
+                    className="absolute inset-0 -z-10 w-full h-full object-cover scale-100 group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className={`absolute inset-0 -z-10 ${isDark ? 'bg-black/60 group-hover:bg-black/40' : 'bg-white/60 group-hover:bg-white/40'} backdrop-blur-md transition-colors duration-500`}
+                  />
+                </>
+              )}
+              <div className="relative p-8">
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-xs font-semibold text-yellow-500 uppercase tracking-wider drop-shadow">
+                    Latest Article
+                  </span>
+                  <span className="text-neutral-400">•</span>
+                  <span className={`text-xs ${isDark ? 'text-neutral-300' : 'text-neutral-600'}`}>{latestPost.readingTime} min read</span>
+                </div>
+                <h3 className={`text-2xl font-bold mb-3 group-hover:text-yellow-500 transition-colors ${isDark ? 'text-white' : 'text-black'} drop-shadow`}>
+                  {latestPost.title}
+                </h3>
+                <p className={`${isDark ? 'text-neutral-200' : 'text-neutral-700'} mb-4 line-clamp-3`}>
+                  {latestPost.excerpt || latestPost.content.substring(0, 150) + '...'}
+                </p>
+                <div className="flex items-center gap-2 text-yellow-500 font-semibold drop-shadow">
+                  Read more <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+                </div>
               </div>
             </Link>
           )}
@@ -178,23 +194,39 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
           {latestJailbreak && (
             <Link
               href={`/jailbreaks/${latestJailbreak.slug}`}
-              className={`group p-8 ${isDark ? 'bg-neutral-950' : 'bg-neutral-50'} border ${isDark ? 'border-neutral-800 hover:border-yellow-500' : 'border-neutral-200 hover:border-yellow-600'} rounded-xl transition-all hover:shadow-lg ${isDark ? 'hover:shadow-yellow-500/20' : 'hover:shadow-yellow-600/20'}`}
+              className={`group relative overflow-hidden isolate ${!latestJailbreak.coverImage ? (isDark ? 'bg-neutral-950' : 'bg-neutral-50') : ''} border ${isDark ? 'border-neutral-800 hover:border-yellow-500' : 'border-neutral-200 hover:border-yellow-600'} rounded-xl transition-all hover:shadow-lg ${isDark ? 'hover:shadow-yellow-500/20' : 'hover:shadow-yellow-600/20'}`}
             >
-              <div className="flex items-center gap-2 mb-4">
-                <span className="text-xs font-semibold text-yellow-500 uppercase tracking-wider">
-                  Latest Jailbreak
-                </span>
-                <span className="text-neutral-600">•</span>
-                <span className="text-xs text-neutral-500">{latestJailbreak.readingTime} min read</span>
-              </div>
-              <h3 className="text-2xl font-bold mb-3 group-hover:text-yellow-500 transition-colors">
-                {latestJailbreak.title}
-              </h3>
-              <p className={`${isDark ? 'text-neutral-400' : 'text-neutral-600'} mb-4 line-clamp-3`}>
-                {latestJailbreak.excerpt || latestJailbreak.content.substring(0, 150) + '...'}
-              </p>
-              <div className="flex items-center gap-2 text-yellow-500 font-semibold">
-                Read more <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+              {latestJailbreak.coverImage && (
+                <>
+                  <img
+                    src={latestJailbreak.coverImage}
+                    alt=""
+                    aria-hidden="true"
+                    className="absolute inset-0 -z-10 w-full h-full object-cover scale-100 group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className={`absolute inset-0 -z-10 ${isDark ? 'bg-black/60 group-hover:bg-black/40' : 'bg-white/60 group-hover:bg-white/40'} backdrop-blur-md transition-colors duration-500`}
+                  />
+                </>
+              )}
+              <div className="relative p-8">
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-xs font-semibold text-yellow-500 uppercase tracking-wider drop-shadow">
+                    Latest Jailbreak
+                  </span>
+                  <span className="text-neutral-400">•</span>
+                  <span className={`text-xs ${isDark ? 'text-neutral-300' : 'text-neutral-600'}`}>{latestJailbreak.readingTime} min read</span>
+                </div>
+                <h3 className={`text-2xl font-bold mb-3 group-hover:text-yellow-500 transition-colors ${isDark ? 'text-white' : 'text-black'} drop-shadow`}>
+                  {latestJailbreak.title}
+                </h3>
+                <p className={`${isDark ? 'text-neutral-200' : 'text-neutral-700'} mb-4 line-clamp-3`}>
+                  {latestJailbreak.excerpt || latestJailbreak.content.substring(0, 150) + '...'}
+                </p>
+                <div className="flex items-center gap-2 text-yellow-500 font-semibold drop-shadow">
+                  Read more <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+                </div>
               </div>
             </Link>
           )}
