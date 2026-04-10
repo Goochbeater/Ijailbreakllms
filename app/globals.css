@@ -103,6 +103,8 @@ body {
 .prose-void {
   @apply text-neutral-300;
   line-height: 1.8;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .prose-void h1 {
@@ -132,6 +134,8 @@ body {
 .prose-void p {
   margin-bottom: 1.5rem;
   line-height: 1.8;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .prose-void a {
@@ -164,6 +168,8 @@ body {
   @apply pl-2;
   margin-bottom: 0.75rem;
   line-height: 1.7;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .prose-void li > p {
@@ -194,6 +200,7 @@ body {
   padding: 0.2rem 0.5rem;
   font-size: 0.9em;
   color: #fbbf24;
+  word-break: break-all;
 }
 
 .prose-void pre {
