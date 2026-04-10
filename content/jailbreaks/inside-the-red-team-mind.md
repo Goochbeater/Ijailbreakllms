@@ -8,6 +8,8 @@ cover: "https://i.imgur.com/NNqMHyg.jpeg"
 
 # Jailbreak Skills 101: Inside The Red Team Mind
 
+![Inside The Red Team Mind Cover](https://i.imgur.com/NNqMHyg.jpeg)
+
 The previous entries in this series covered concrete techniques I personally think all aspiring red team researchers should start with as a base; prompt extraction, indirect injection, the mechanical stuff you can copy-paste and run. I don't like the term “patched”, it's disgusting to me, nothing ever gets patched, the models get smarter. So let's just say techniques have a half-life. The prompt that worked last week returns a refusal today. If all you have is a bag of tricks and no actual foundation, you're one model update away from irrelevance.
 
 This article is about the actual core: Mindset.
