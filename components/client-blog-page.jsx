@@ -39,7 +39,7 @@ export function ClientBlogPage({ posts }) {
                       />
                       <div
                         aria-hidden="true"
-                        className={`absolute inset-0 -z-10 ${isDark ? 'bg-black/60 group-hover:bg-black/40' : 'bg-white/60 group-hover:bg-white/40'} backdrop-blur-md transition-colors duration-500`}
+                        className={`absolute inset-0 -z-10 ${isDark ? 'bg-black/40 group-hover:bg-black/25' : 'bg-white/40 group-hover:bg-white/25'} backdrop-blur-[2px] transition-colors duration-500`}
                       />
                     </>
                   )}
@@ -51,7 +51,7 @@ export function ClientBlogPage({ posts }) {
                       <span className="text-neutral-400">•</span>
                       <span className={`text-xs ${isDark ? 'text-neutral-300' : 'text-neutral-600'}`}>{post.readingTime} min read</span>
                     </div>
-                    <h3 className={`text-xl font-bold mb-2 group-hover:text-yellow-500 transition-colors ${isDark ? 'text-white' : 'text-black'} drop-shadow`}>
+                    <h3 className={`text-xl font-bold mb-2 group-hover:text-yellow-500 transition-colors ${isDark ? 'text-white' : 'text-black'} drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>
                       {post.title}
                     </h3>
                     {post.date && (
