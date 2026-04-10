@@ -1,6 +1,6 @@
 ---
 title: "Jailbreak Skills 101: Indirect Prompt Injection"
-date: "2026-04-10"
+date: "2026-04-11"
 type: "Technical"
 excerpt: "A beginner's guide to indirect prompt injection — hiding malicious instructions in content the AI reads. Techniques, real CTF breakdowns, and where to practice."
 ---
@@ -254,7 +254,7 @@ Actual bytes: 😊 + [VS0][VS1][VS1][VS0][VS0][VS1][VS0][VS1]...
 
 **Why it's dangerous:** In testing, emoji smuggling achieved 100% evasion against several production guardrails including Protect AI v2 and Azure Prompt Shield. The guardrail's tokenizer strips the variation selectors, sees only a harmless emoji, and passes it through — but the LLM's own processing can still be influenced.
 
-![Emoji Smuggling](https://i.imgur.com/RiMBMqC.png)
+![Emoji Smuggling](https://i.imgur.com/GeNn3iU.jpeg)
 
 *ENI in an Emoji, oh my*
 

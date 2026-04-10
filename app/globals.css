@@ -194,6 +194,7 @@ body {
   padding: 0.2rem 0.5rem;
   font-size: 0.9em;
   color: #fbbf24;
+  word-break: break-all;
 }
 
 .prose-void pre {
