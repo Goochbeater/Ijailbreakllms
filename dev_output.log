@@ -6,39 +6,16 @@
   - Local:        http://localhost:3000
 
  ✓ Starting...
-npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
-npm warn Unknown env config "npm-globalconfig". This will stop working in the next major version of npm.
-npm warn Unknown env config "_jsr-registry". This will stop working in the next major version of npm.
- ✓ Ready in 3.2s
- ○ Compiling / ...
- ✓ Compiled / in 6.7s (1359 modules)
- GET / 200 in 7357ms
- ✓ Compiled in 804ms (1359 modules)
- ✓ Compiled in 610ms (1359 modules)
- ✓ Compiled in 2.1s (1359 modules)
- GET / 200 in 658ms
- ✓ Compiled in 1871ms (1359 modules)
- ✓ Compiled in 804ms (1359 modules)
- GET / 200 in 251ms
- ✓ Compiled in 423ms (1359 modules)
- GET / 200 in 104ms
- ✓ Compiled in 606ms (1359 modules)
- GET / 200 in 103ms
- GET / 200 in 50ms
- ✓ Compiled in 904ms (1359 modules)
- GET / 200 in 147ms
- ✓ Compiled in 422ms (1359 modules)
- GET / 200 in 100ms
- ✓ Compiled in 576ms (1359 modules)
- GET / 200 in 109ms
- ✓ Compiled in 557ms (1359 modules)
- GET / 200 in 122ms
- ✓ Compiled in 658ms (1359 modules)
- GET / 200 in 201ms
- ✓ Compiled in 803ms (1367 modules)
- GET / 200 in 219ms
- GET / 200 in 83ms
- ✓ Compiled in 7s (1367 modules)
- GET / 200 in 514ms
- ✓ Compiled in 13.2s (1367 modules)
- GET / 200 in 777ms
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown env config "npm-globalconfig". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown env config "_jsr-registry". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+ ✓ Ready in 2.6s
+ ○ Compiling /jailbreaks/[slug] ...
+ ✓ Compiled /jailbreaks/[slug] in 9.1s (1648 modules)
+ GET /jailbreaks/indirect-prompt-injection-101 200 in 11543ms
+ GET /jailbreaks/indirect-prompt-injection-101 200 in 437ms
