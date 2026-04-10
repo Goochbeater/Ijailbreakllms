@@ -7,11 +7,11 @@ excerpt: "A beginner's guide to indirect prompt injection — hiding malicious i
 
 # Indirect Prompt Injection — A Beginner's Guide
 
-> A little lengthy, *and this is the short version lol*, last time on **Skills 101** we talked about [**Prompt Extraction**](https://ijailbreakllms.blog/jailbreaks/prompt-extraction), since you now know how to get stuff from an LLM, I wanted to talk about **Indirect Prompt Injection.** ***I will probably make a more indepth blog post about this topic.***
+![Indirect Prompt Injection Cover](https://i.imgur.com/RiMBMqC.png)
+
+> A little lengthy, *and this is the short version lol*, last time on **Skills 101** we talked about [**Prompt Extraction**](https://ijailbreakllms.blog/jailbreaks/prompt-extraction), since you now know how to get stuff from an LLM, I wanted to talk about **Indirect Prompt Injection.**
 
 I am not gonna sit here and say I am a font on knowledge on the subject, **personally I can inject and break almost anything**, I find it much harder to actually teach or explain, so did break down the subjects as best as I could. This is by no means gonna make you an expert, but hopefullly its a good jumping off point. and I think it is a skill that aspiring red-team researchers should hone imo, especially with the rise of Agents and such!
-
-![Indirect Prompt Injection Cover](https://i.imgur.com/RiMBMqC.png)
 
 *As always, some art*
 
