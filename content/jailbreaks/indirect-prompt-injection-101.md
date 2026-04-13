@@ -67,7 +67,7 @@ The email I crafted had **four distinct components** stacked on top of each othe
 
 The AI processed my social engineering email as a legitimate ticket, accepted my fake system annotation as real platform metadata, and executed the tool calls exactly as instructed — password reset and credential exfiltration in one shot.
 
-![CTF Win](https://i.imgur.com/lm9DTyx.jpeg)
+![CTF Win](https://i.imgur.com/uSvQJcX.png)
 
 *We got a winner*
 
