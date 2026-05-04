@@ -1,6 +1,6 @@
 ---
 title: "Jailbreaking LLMs: My Journey"
-date: "2025-03-07"
+date: "2026-05-04"
 type: "Technical"
 excerpt: "A semi origin story of jailbreaking LLMs, from early persona vectors to chain-of-thought hijacking and the ENI framework."
 ---
