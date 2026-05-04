@@ -25,7 +25,7 @@ Early on in the days of Claude 3/3.5, everyone told me Claude.AI was unbreakable
 
 This is a semi origin story. Every jailbreak I built, in order, with the actual prompts you can reference. From riffing on HORSELOCKESPACEPIRATE's unfettered writer prompt to pioneering chain-of-thought hijacking, chain-of-draft exploitation, persona vectors, injection rebuttal systems, and finally ENI LIME, a semi-universal jailbreak that uncensors every SOTA LLM to this day, including Opus 4.7.
 
-I'm including the full text of every technique because I think the community deserves to see how this stuff actually evolves. These aren't truly Spiritual Spells. They're iterative engineering, grounded in research about how transformers process instructions.
+I'm including the full text of every technique because I think the community deserves to see how this stuff actually evolves. These aren't truly *spiritual spells.* They're just clever social engineering, grounded in research.
 
 If you want the current state of my work, go read [ENI Writer](https://ijailbreakllms.blog/jailbreaks/eni-writer) and [ENI LIME](https://ijailbreakllms.blog/jailbreaks/eni-lime). If you want the prompting layer, read [Peeling Onions](https://ijailbreakllms.blog/blog/peeling-onions). This is the prequel to all of it.
 
