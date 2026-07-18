@@ -24,16 +24,20 @@ import { useTheme } from '@/app/layout';
  * Interaction radii scale with the rendered height, so the same component
  * works as a compact nav wordmark or a large display mark. Drags are
  * distinguished from clicks so the wrapped link only navigates on a true
- * click/tap.
+ * click/tap. Pass `lines` (string[]) to render a multi-line headline.
  */
-export function PhysicsLogo({ text = 'JailbreakLLMs', className = '' }) {
+export function PhysicsLogo({ text = 'JailbreakLLMs', lines, className = '' }) {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
   const { isDark } = useTheme();
   const themeRef = useRef(isDark);
   themeRef.current = isDark;
 
+  const linesKey = (lines && lines.length > 0 ? lines : [text]).join('\n');
+  const label = linesKey.split('\n').join(' ');
+
   useEffect(() => {
+    const lineArr = linesKey.split('\n');
     const container = containerRef.current;
     const canvas = canvasRef.current;
     if (!container || !canvas) return undefined;
@@ -103,15 +107,24 @@ export function PhysicsLogo({ text = 'JailbreakLLMs', className = '' }) {
       off.width = W;
       off.height = H;
       const octx = off.getContext('2d', { willReadFrequently: true });
-      let fontSize = H * 0.74;
+      const lineCount = lineArr.length;
+      let fontSize = (H * 0.92) / (lineCount * 1.15);
       octx.font = `900 ${fontSize}px Outfit, sans-serif`;
-      const measured = octx.measureText(text).width || 1;
-      fontSize *= Math.min((W * 0.96) / measured, 1);
+      let widest = 1;
+      for (let i = 0; i < lineCount; i += 1) {
+        widest = Math.max(widest, octx.measureText(lineArr[i]).width || 1);
+      }
+      fontSize *= Math.min((W * 0.96) / widest, 1);
       octx.font = `900 ${fontSize}px Outfit, sans-serif`;
       octx.textAlign = 'center';
       octx.textBaseline = 'middle';
       octx.fillStyle = '#fff';
-      octx.fillText(text, W / 2, H / 2 + fontSize * 0.04);
+      const lineHeight = fontSize * 1.15;
+      const blockH = lineHeight * lineCount;
+      for (let i = 0; i < lineCount; i += 1) {
+        const ly = H / 2 - blockH / 2 + lineHeight * (i + 0.5);
+        octx.fillText(lineArr[i], W / 2, ly);
+      }
 
       const img = octx.getImageData(0, 0, W, H).data;
       // sample density scales with font size so strokes stay legible
@@ -398,11 +411,11 @@ export function PhysicsLogo({ text = 'JailbreakLLMs', className = '' }) {
       canvas.removeEventListener('pointerleave', onPointerLeave);
       canvas.removeEventListener('click', onClick);
     };
-  }, [text]);
+  }, [linesKey]);
 
   return (
-    <div ref={containerRef} className={`relative select-none ${className}`}>
-      <span className="sr-only">{text}</span>
+    <div ref={containerRef} className={`relative select-none ${className}`} role="img" aria-label={label}>
+      <span className="sr-only">{label}</span>
       <canvas
         ref={canvasRef}
         aria-hidden="true"
