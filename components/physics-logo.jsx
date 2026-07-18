@@ -4,14 +4,14 @@ import { useEffect, useRef } from 'react';
 import { useTheme } from '@/app/layout';
 
 /**
- * PhysicsLogo — an interactive particle wordmark.
+ * PhysicsLogo — the site wordmark as interactive particles.
  *
  * The logo text is rasterised to an offscreen canvas and sampled into a grid
  * of particles (one per opaque glyph cell). The particles are simulated with
  * fixed-timestep Verlet integration:
  *
  *   - every particle is spring-bound to its "home" glyph position, so the
- *     text always re-forms naturally on release
+ *     wordmark always re-forms naturally on release
  *   - neighbouring particles are linked by short distance constraints solved
  *     with position-based dynamics (unconditionally stable, no explosions)
  *   - the pointer/touch exerts a radial repulsion field — swipes "part" the
@@ -19,7 +19,12 @@ import { useTheme } from '@/app/layout';
  *   - pressing captures nearby particles so the word can be dragged around
  *   - pointer velocity injects a tangential curl force, so circular motions
  *     spin/rotate the cloud
- *   - a velocity clamp + fixed timestep keep the sim stable at any frame rate
+ *   - velocity clamp + fixed timestep keep the sim stable at any frame rate
+ *
+ * Interaction radii scale with the rendered height, so the same component
+ * works as a compact nav wordmark or a large display mark. Drags are
+ * distinguished from clicks so the wrapped link only navigates on a true
+ * click/tap.
  */
 export function PhysicsLogo({ text = 'JailbreakLLMs', className = '' }) {
   const containerRef = useRef(null);
@@ -37,15 +42,14 @@ export function PhysicsLogo({ text = 'JailbreakLLMs', className = '' }) {
     // ---- tunables ------------------------------------------------------
     const DAMPING = 0.9; // velocity retained per step
     const HOME_K = 0.055; // spring stiffness pulling particles home
-    const REPEL_RADIUS = 110; // pointer "parting" radius (px)
     const REPEL_K = 2.6; // repulsion strength
-    const GRAB_RADIUS = 72; // press-and-drag capture radius (px)
     const GRAB_K = 0.3; // drag attraction strength
     const SWIRL_K = 0.16; // rotational force from pointer velocity
     const MAX_SPEED = 26; // velocity clamp (stability)
     const SOLVER_ITERS = 2; // constraint relaxation passes per step
     const IDLE_AMP = 0.05; // ambient breathing force
     const STEP_MS = 1000 / 60; // fixed physics timestep
+    const DRAG_CLICK_TOLERANCE = 6; // px of movement that turns a click into a drag
     // --------------------------------------------------------------------
 
     let particles = [];
@@ -56,8 +60,10 @@ export function PhysicsLogo({ text = 'JailbreakLLMs', className = '' }) {
     let visible = true;
     let W = 0;
     let H = 0;
-    let gap = 4;
-    let dotR = 1.6;
+    let gap = 3;
+    let dotR = 1.2;
+    let repelRadius = 60;
+    let grabRadius = 40;
 
     const pointer = {
       x: -1e4,
@@ -67,6 +73,11 @@ export function PhysicsLogo({ text = 'JailbreakLLMs', className = '' }) {
       down: false,
       inside: false,
     };
+
+    // click vs. drag tracking (so the parent link navigates only on real clicks)
+    let downClientX = 0;
+    let downClientY = 0;
+    let wasDrag = false;
 
     const reducedMotion =
       typeof window !== 'undefined' &&
@@ -82,6 +93,10 @@ export function PhysicsLogo({ text = 'JailbreakLLMs', className = '' }) {
       canvas.style.width = `${W}px`;
       canvas.style.height = `${H}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      // interaction radii scale with the rendered size
+      repelRadius = Math.max(36, Math.min(120, H * 1.1));
+      grabRadius = repelRadius * 0.65;
 
       // Rasterise the wordmark offscreen to find glyph pixels
       const off = document.createElement('canvas');
@@ -99,7 +114,8 @@ export function PhysicsLogo({ text = 'JailbreakLLMs', className = '' }) {
       octx.fillText(text, W / 2, H / 2 + fontSize * 0.04);
 
       const img = octx.getImageData(0, 0, W, H).data;
-      gap = Math.max(3, Math.min(6, Math.round(W / 240)));
+      // sample density scales with font size so strokes stay legible
+      gap = Math.max(2, Math.min(6, Math.round(fontSize / 14)));
       dotR = Math.max(1.1, gap * 0.42);
       particles = [];
       sticks = [];
@@ -136,8 +152,8 @@ export function PhysicsLogo({ text = 'JailbreakLLMs', className = '' }) {
     }
 
     function step(t) {
-      const repelR2 = REPEL_RADIUS * REPEL_RADIUS;
-      const grabR2 = GRAB_RADIUS * GRAB_RADIUS;
+      const repelR2 = repelRadius * repelRadius;
+      const grabR2 = grabRadius * grabRadius;
       const hasPointer = pointer.inside || pointer.down;
 
       for (let i = 0; i < particles.length; i += 1) {
@@ -157,7 +173,7 @@ export function PhysicsLogo({ text = 'JailbreakLLMs', className = '' }) {
             const d = Math.sqrt(d2) || 0.001;
             const nx = dx / d;
             const ny = dy / d;
-            const fall = 1 - d / REPEL_RADIUS;
+            const fall = 1 - d / repelRadius;
             if (pointer.down && d2 < grabR2) {
               // drag: captured particles are pulled toward the pointer
               ax += -dx * GRAB_K;
@@ -216,7 +232,7 @@ export function PhysicsLogo({ text = 'JailbreakLLMs', className = '' }) {
       const dark = themeRef.current;
       const base = dark ? '#E9C766' : '#8a6508';
       const hot = dark ? '#FFF3C4' : '#d4af37';
-      const glowR2 = REPEL_RADIUS * REPEL_RADIUS;
+      const glowR2 = repelRadius * repelRadius;
       const showGlow = pointer.inside || pointer.down;
 
       // base pass — one batched path
@@ -280,11 +296,20 @@ export function PhysicsLogo({ text = 'JailbreakLLMs', className = '' }) {
 
     function onPointerMove(e) {
       updatePointer(e);
+      if (
+        pointer.down &&
+        (Math.abs(e.clientX - downClientX) > DRAG_CLICK_TOLERANCE ||
+          Math.abs(e.clientY - downClientY) > DRAG_CLICK_TOLERANCE)
+      ) {
+        wasDrag = true;
+      }
     }
 
     function onPointerDown(e) {
       updatePointer(e);
       pointer.down = true;
+      downClientX = e.clientX;
+      downClientY = e.clientY;
       try {
         canvas.setPointerCapture(e.pointerId);
       } catch {
@@ -301,6 +326,15 @@ export function PhysicsLogo({ text = 'JailbreakLLMs', className = '' }) {
       }
     }
 
+    function onClick(e) {
+      // a drag that ends on the canvas must not navigate the parent link
+      if (wasDrag) {
+        e.preventDefault();
+        e.stopPropagation();
+        wasDrag = false;
+      }
+    }
+
     function onPointerLeave() {
       pointer.inside = false;
       pointer.down = false;
@@ -311,6 +345,7 @@ export function PhysicsLogo({ text = 'JailbreakLLMs', className = '' }) {
     canvas.addEventListener('pointerup', onPointerUp);
     canvas.addEventListener('pointercancel', onPointerUp);
     canvas.addEventListener('pointerleave', onPointerLeave);
+    canvas.addEventListener('click', onClick);
 
     // rebuild when the container resizes (debounced)
     let rebuildTimer;
@@ -323,7 +358,7 @@ export function PhysicsLogo({ text = 'JailbreakLLMs', className = '' }) {
     });
     ro.observe(container);
 
-    // pause the sim when the hero scrolls out of view
+    // pause the sim when the logo scrolls out of view
     const io = new IntersectionObserver(
       (entries) => {
         visible = entries[0]?.isIntersecting !== false;
@@ -361,16 +396,12 @@ export function PhysicsLogo({ text = 'JailbreakLLMs', className = '' }) {
       canvas.removeEventListener('pointerup', onPointerUp);
       canvas.removeEventListener('pointercancel', onPointerUp);
       canvas.removeEventListener('pointerleave', onPointerLeave);
+      canvas.removeEventListener('click', onClick);
     };
   }, [text]);
 
   return (
-    <div
-      ref={containerRef}
-      className={`relative w-full select-none ${className}`}
-      role="img"
-      aria-label={text}
-    >
+    <div ref={containerRef} className={`relative select-none ${className}`}>
       <span className="sr-only">{text}</span>
       <canvas
         ref={canvasRef}
