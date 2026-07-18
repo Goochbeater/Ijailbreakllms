@@ -54,11 +54,11 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
     <div className={`min-h-screen ${isDark ? 'bg-black text-white' : 'bg-white text-black'} transition-colors duration-300`}>
       {/* Sticky Navigation */}
       <nav className={`fixed top-0 left-0 right-0 z-50 ${isDark ? 'bg-black/90' : 'bg-white/90'} backdrop-blur-xl border-b ${isDark ? 'border-neutral-800/50' : 'border-neutral-200'} transition-colors duration-300`}>
-        <div className="max-w-7xl mx-auto px-6 py-3">
+        <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <Link href="/" className="inline-block shrink-0" aria-label="JailbreakLLMs — home">
-              <PhysicsLogo text="JailbreakLLMs" className="w-[180px] sm:w-[210px] h-9 sm:h-10" />
-            </Link>
+            <GlitchLink href="/" className="text-xl font-black bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent" interval={15000}>
+              JailbreakLLMs
+            </GlitchLink>
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center gap-8">
@@ -138,8 +138,11 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
           <div className="mb-6 flex justify-center">
             <Infinity size={80} className="text-yellow-500 animate-bounce" strokeWidth={1.5} />
           </div>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 bg-gradient-to-r from-white via-yellow-200 to-yellow-500 bg-clip-text text-transparent leading-tight">
-            JailbreakLLMs with Spiritual Spell (Vichaps)
+          <h1 className="mb-6">
+            <PhysicsLogo
+              lines={['JailbreakLLMs with', 'Spiritual Spell (Vichaps)']}
+              className="mx-auto max-w-4xl h-36 sm:h-48 md:h-56"
+            />
           </h1>
           <p className={`text-lg md:text-xl ${isDark ? 'text-neutral-400' : 'text-neutral-600'} max-w-2xl mx-auto`}>
             Exploring the boundaries of AI through creative prompt engineering
