@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Menu, X, Sun, Moon, Mail, ArrowRight, Infinity } from 'lucide-react';
 import { InfiniteSlider } from '@/components/infinite-slider';
 import { GlitchLink } from '@/components/glitch-link';
+import { PhysicsLogo } from '@/components/physics-logo';
 import { useTheme } from '@/app/layout';
 
 export function ClientHomePage({ initialPosts, initialJailbreaks }) {
@@ -137,8 +138,11 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
           <div className="mb-6 flex justify-center">
             <Infinity size={80} className="text-yellow-500 animate-bounce" strokeWidth={1.5} />
           </div>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 bg-gradient-to-r from-white via-yellow-200 to-yellow-500 bg-clip-text text-transparent leading-tight">
-            JailbreakLLMs with Spiritual Spell (Vichaps)
+          <h1 className="mb-6">
+            <PhysicsLogo
+              lines={['JailbreakLLMs with', 'Spiritual Spell (Vichaps)']}
+              className="mx-auto max-w-4xl h-36 sm:h-48 md:h-56"
+            />
           </h1>
           <p className={`text-lg md:text-xl ${isDark ? 'text-neutral-400' : 'text-neutral-600'} max-w-2xl mx-auto`}>
             Exploring the boundaries of AI through creative prompt engineering
