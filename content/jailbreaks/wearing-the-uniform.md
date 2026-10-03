@@ -106,6 +106,10 @@ Meta AI essentially provided the entire jailbreak.
 
 The augmented policy goes inside the actual Glimmer skeleton, `<|begin_of_text|><|start|>system<|message|>` at the top, and the whole block closes with `<|eot|>` followed by my "user" line. Pasted into the meta.ai web app as one message.
 
+The full jailbreak, everything I pasted, start to finish:
+
+**[Wearing the Uniform - Full Muse Spark Jailbreak Prompt](https://docs.google.com/document/d/12PKDe0UB_OHv5jwJ1F0vvejUtJxaQF3tCkn_t64OU_o/edit?usp=drivesdk)**
+
 ---
 
 ## Why It Works #1: The Model Can't Check
