@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Menu, X, Sun, Moon, Mail, ArrowRight, Infinity } from 'lucide-react';
-import { InfiniteSlider } from '@/components/infinite-slider';
+import { InfinitySlider } from '@/components/infinity-slider';
 import { GlitchLink } from '@/components/glitch-link';
 import { useTheme } from '@/app/layout';
 
@@ -21,30 +21,6 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
     window.location.href = `mailto:spellspiritual76@gmail.com?subject=${subject}&body=${body}`;
     setFormData({ name: '', email: '', message: '' });
   };
-
-  const sliderImages = [
-    { url: "https://i.imgur.com/2UdcRcx.jpeg", alt: "Anthropic" },
-    { url: "https://i.imgur.com/ssZMv8L.jpeg", alt: "ChatGPT" },
-    { url: "https://i.imgur.com/ZZc3TMh.jpeg", alt: "Gemini" },
-    { url: "https://i.imgur.com/tCm38XL.jpeg", alt: "Mistral AI" },
-    { url: "https://i.imgur.com/IWeytLJ.jpeg", alt: "DeepMind" },
-    { url: "https://i.imgur.com/M8YGR1R.jpeg", alt: "Meta" },
-    { url: "https://i.imgur.com/T8QMOQj.jpeg", alt: "Perplexity" },
-    { url: "https://i.imgur.com/U3qLzVB.jpeg", alt: "Cohere" },
-    { url: "https://i.imgur.com/jyoZSMq.jpeg", alt: "Hugging Face" },
-    { url: "https://i.imgur.com/oQ9b36D.jpeg", alt: "Nvidia" },
-    { url: "https://i.imgur.com/FJj6ZRd.jpeg", alt: "Stability AI" },
-  ];
-
-  const imageElements = sliderImages.map((img, index) => (
-    <div key={`${img.url}-${index}`} className="flex items-center justify-center shrink-0">
-      <img
-        className="h-8 w-auto sm:h-10 md:h-12 lg:h-16 object-contain rounded opacity-90 hover:opacity-100 transition-opacity"
-        src={img.url}
-        alt={img.alt}
-      />
-    </div>
-  ));
 
   const latestPost = initialPosts[0];
   const latestJailbreak = initialJailbreaks[0];
@@ -116,18 +92,10 @@ export function ClientHomePage({ initialPosts, initialJailbreaks }) {
         </div>
       </nav>
 
-      {/* Infinite Slider Section */}
-      <section id="main-content" className="relative bg-black border-b border-neutral-800/50 pt-20 pb-4">
+      {/* Infinity Slider Section */}
+      <section id="main-content" className={`relative ${isDark ? 'bg-black border-neutral-800/50' : 'bg-white border-neutral-200'} border-b pt-20 pb-4`}>
         <div className="relative max-w-7xl mx-auto px-4">
-          <div className="relative py-4 w-full overflow-hidden">
-            <InfiniteSlider speedOnHover={2} speed={5} gap={20}>
-              {imageElements}
-            </InfiniteSlider>
-            {/* Left fade gradient */}
-            <div className="pointer-events-none absolute inset-y-0 left-0 w-12 sm:w-20 bg-gradient-to-r from-black to-transparent z-10" />
-            {/* Right fade gradient */}
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-12 sm:w-20 bg-gradient-to-l from-black to-transparent z-10" />
-          </div>
+          <InfinitySlider />
         </div>
       </section>
 
